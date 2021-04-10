@@ -6,7 +6,7 @@ O [Prof. Auri Vincenzi](http://lapes.dc.ufscar.br/members/faculties/auri-vincenz
 
 Pedro Sakuma Travi \(Santander\) possui vasta experiência no uso do TDD como metodologia de desenvolvimento e contribui extensivamente com as práticas de TDD e os relatos de experiência aqui apresentados.
 
-Eduardo Molina \(???\) possui experiência em desenvolvimento Python e contribui com a melhoria, detalhamento das explicações de todo código Python presente neste material. 
+Eduardo Molina \(Raccoon\) possui experiência em desenvolvimento Python e contribui com a melhoria, detalhamento das explicações de todo código Python presente neste material. 
 
 A [Profa. Marilde Terezinha Prado Santos](http://www2.dc.ufscar.br/~marilde/) \(DC/UFSCar\) é especialista em Educação a Distância, organizadora do MBA Machine Learning in Production e contribui enormemente com o desenvolvimento do conteúdo aqui apresentado.
 
