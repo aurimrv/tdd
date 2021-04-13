@@ -19,4 +19,5 @@
 
 * [2.1 Considerações Iniciais](2-teste-de-software/2-1-consideracoes-iniciais.md)
 * [2.2 Terminologia e Conceitos Básicos](2-teste-de-software/2-2-terminologia-e-conceitos-basicos.md)
+* [2.3 Técnicas e Critérios de Teste](2-teste-de-software/2-3-tecnicas-e-criterios-de-teste.md)
 
