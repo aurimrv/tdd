@@ -11,7 +11,8 @@
 
 * [1.1 Considerações Iniciais](1-introducao/1-1-consideracoes-iniciais.md)
 * [1.2 Configuração do Ambiente](1-introducao/1-2-configuracao-do-ambiente.md)
-* [1.3 TDD Básico](1-introducao/1-3-tdd-basico.md)
+* [1.3 TDD Básico](1-introducao/1-3-tdd-basico/README.md)
+  * [1.3.1 Exemplo Simples](1-introducao/1-3-tdd-basico/1.3.1-exemplo-simples.md)
 * [1.4 Considerações Finais](1-introducao/1-4-consideracoes-finais.md)
 
 ## 2 TESTE DE SOFTWARE
