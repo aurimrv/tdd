@@ -8,5 +8,5 @@ Conforme definido por [Kent Beck \(2003\)](https://www.amazon.com.br/Test-Driven
 
 ![Ciclo TDD \(Fonte: Rocha \(2013\)\)](../../.gitbook/assets/ciclo-tdd.jpg)
 
-Desse modo, observamos que o TDD enfatiza uma estratégia de desenvolvimento e integração _botton-up_, ou seja, de unidades menores para as maiores \([Beck, 2003](https://www.amazon.com.br/Test-Driven-Development-Kent-Beck/dp/0321146530)\).
+Desse modo, observamos que o TDD enfatiza uma estratégia de desenvolvimento e integração _botton-up_, ou seja, de unidades menores para as maiores \([Beck, 2003](https://www.amazon.com.br/Test-Driven-Development-Kent-Beck/dp/0321146530)\). Essa estratégia minimiza, por exemplo, a necessidade de [Mock Objects](https://blog.cleancoder.com/uncle-bob/2014/05/10/WhenToMock.html), facilitando o teste da aplicação no seu contexto.
 
