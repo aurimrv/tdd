@@ -1,6 +1,8 @@
 # Programação e Desenvolvimento Dirigidor por Testes em Python
 
-![Logo inspirada na capa do livro TDD com Python \(Percival, 2017\)](.gitbook/assets/goat-icon-transparente.png)
+
+
+![Imagem inspirada no livro de Percival \(2017\)](.gitbook/assets/goat-icon.png)
 
 Sejam bem vindos ao curso de **Programação e Desenvolvimento Dirigido por Testes em Python**. 
 
