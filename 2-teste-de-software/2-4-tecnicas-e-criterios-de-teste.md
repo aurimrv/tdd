@@ -52,7 +52,7 @@ Um dos problemas relacionado aos critérios funcionais é que muitas vezes a esp
 
 ### Critério Particionamento em Classe de Equivalência
 
-A título de ilustração, considerando a especofocação do programa `Identifier` e o critério Particionamento em Classes de Equivalência, são identificadas na Tabela 1 as condições de entrada e classes de equivalência válidas e inválidas segundo a interpretação dos autores.
+A título de ilustração, considerando a especofocação do programa `Identifier` e o critério Particionamento em Classes de Equivalência, são identificadas na tabela abaixo as condições de entrada e classes de equivalência válidas e inválidas segundo a interpretação dos autores.
 
 <table>
   <thead>
@@ -99,5 +99,15 @@ A título de ilustração, considerando a especofocação do programa `Identifie
   </tbody>
 </table>
 
-A partir dessas classes o seguinte conjunto de casos de teste poderia ser elaborado: T0 = {\(a1, Válido\), \(2B3, Inválido\), \(Z-12, Inválido\), \(A1b2C3d, Inválido\)}. De posse do conjunto T0, seria natural indagar se esse conjunto exercita todos os comandos ou todos os desvios de fluxo de controle de uma dada implementação. Usualmente, lança-se mão de critérios estruturais de teste, apresentados a seguir, como critérios de adequação ou critérios de cobertura para se analisar questões como essas, propiciando a quantificação e a qualificação da atividade de teste de acordo com o critério escolhido. Quanto mais rigoroso o critério utilizado e se erros não forem revelados, maior a confiança no produto em desenvolvimento.
+Como foi mencionado anteriormente, ao aplicar um critério de teste considerando determinada fonte de informação, são gerados os requisitos de teste demandados pelo referido critério. No caso do critério Particionamento em Classe de Equivalência, esses requisitos correspondem a partições, como as exibidas na tabela acima. Observa-se que uma vez estabalecidos os requisitos, todo e qualquer conjunto de teste que satisfaça o critério terá ao menos cinco casos de teste: um para cobrir as classes válidas e outros quatro, um para cada classe inválida. Os números abaixo das partições servem para identificá-las.
+
+Por exemplo, dada a tabela acima, um possível caso de teste para cobrir as partições válidas seria: `("a1", Válido)`. Observa-se que esse teste é capaz de satisfazer as partições \(1\), \(4\) e \(5\) pois tem tamanho 2, inicia com letra e contém apenas mais um dígito após a primeira letra.
+
+O segundo caso de teste, capaz de cobrir a partição inválida \(2\) é o `("", Inválido)`, ou seja, a cadeia vazia.
+
+As demais partições \(3\), \(4\) e \(5\) poderiam ser cobertas, por exemplo, com os casos de teste `("2B3", Inválido)`, `("Z-12", Inválido)`, `("A1b2C3d", Inválido)`, respectivamente.
+
+Desse modo, têm-se o conjunto de teste $$T_0 = $$ {`("a1", Válido)`, `("", Inválido)`, `("2B3", Inválido)`, `("Z-12", Inválido)`, `("A1b2C3d", Inválido)` } como sendo um conjunto adequado para o critério Particionamento em Classe de Equivalência, considerando as partições definidas.
+
+
 
