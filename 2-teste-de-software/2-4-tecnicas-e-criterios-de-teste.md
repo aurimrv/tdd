@@ -50,3 +50,54 @@ Dois dos critérios funcionais mais conhecidos são:
 
 Um dos problemas relacionado aos critérios funcionais é que muitas vezes a especificação do programa é feita de modo descritivo e não formal. Dessa maneira, os requisitos de teste derivados de tais especificações são também, de certa forma, imprecisos e informais. Como consequência, tem-se dificuldade em automatizar a aplicação de tais critérios, que ficam, em geral, restritos à aplicação manual. Por outro lado, para a aplicação desses critérios é essencial apenas que se identifiquem as entradas, a função a ser computada e a saída do programa, o que os tornam aplicáveis praticamente em todas fases de teste \(unidade, integração e sistema\). No caso do TDD, essa é a técnica de teste mais utilizada pois é sempre a partir do entendimento da especificação do que será construído que os testes são desenvolvidos \([Percival, 2017](http://www.obeythetestinggoat.com/pages/book.html)\).
 
+### Critério Particionamento em Classe de Equivalência
+
+A título de ilustração, considerando a especofocação do programa `Identifier` e o critério Particionamento em Classes de Equivalência, são identificadas na Tabela 1 as condições de entrada e classes de equivalência válidas e inválidas segundo a interpretação dos autores.
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align:left">Restri&#xE7;&#xF5;es de Entrada</th>
+      <th style="text-align:center">Classe V&#xE1;lida</th>
+      <th style="text-align:center">Classe Inv&#xE1;lida</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align:left">Tamanho (t) do identificador</td>
+      <td style="text-align:center">
+        <p></p>
+        <p>(1)</p>
+      </td>
+      <td style="text-align:center">
+        <p></p>
+        <p>(2) (3)</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:left">Primeiro caractere (c) &#xE9; uma letra</td>
+      <td style="text-align:center">
+        <p>Sim</p>
+        <p>(4)</p>
+      </td>
+      <td style="text-align:center">
+        <p>N&#xE3;o</p>
+        <p>(5)</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:left">Demais caracteres s&#xE3;o letra ou d&#xED;gito</td>
+      <td style="text-align:center">
+        <p>Sim</p>
+        <p>(5)</p>
+      </td>
+      <td style="text-align:center">
+        <p>N&#xE3;o</p>
+        <p>(7)</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+A partir dessas classes o seguinte conjunto de casos de teste poderia ser elaborado: T0 = {\(a1, Válido\), \(2B3, Inválido\), \(Z-12, Inválido\), \(A1b2C3d, Inválido\)}. De posse do conjunto T0, seria natural indagar se esse conjunto exercita todos os comandos ou todos os desvios de fluxo de controle de uma dada implementação. Usualmente, lança-se mão de critérios estruturais de teste, apresentados a seguir, como critérios de adequação ou critérios de cobertura para se analisar questões como essas, propiciando a quantificação e a qualificação da atividade de teste de acordo com o critério escolhido. Quanto mais rigoroso o critério utilizado e se erros não forem revelados, maior a confiança no produto em desenvolvimento.
+
