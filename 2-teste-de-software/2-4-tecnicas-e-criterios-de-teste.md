@@ -1,6 +1,24 @@
 # 2.4 Técnicas e Critérios de Teste
 
-Para se conduzir e avaliar a qualidade da atividade de teste têm-se as técnicas de teste funcional, estrutural e baseada em defeitos. Tais técnicas diferenciam-se pela origem da informação utilizada na avaliação e construção dos conjuntos de teste \([Delamaro et al. 2016](https://www.grupogen.com.br/e-book-introducao-ao-teste-de-software)\). 
+Para se conduzir e avaliar a qualidade da atividade de teste têm-se as técnicas de teste funcional, estrutural e baseada em defeitos \([Delamaro et al. 2016](https://www.grupogen.com.br/e-book-introducao-ao-teste-de-software)\). Tais técnicas diferenciam-se pela origem da informação utilizada na avaliação e construção dos conjuntos de teste.
+
+* Na **técnica funcional**, os critérios e requisitos de teste são estabelecidos a partir da função de especificação do software; 
+* Na **técnica estrutural**, os critérios e requisitos são derivados essencialmente a partir das características de uma particular implementação em teste; e
+* Na **técnica baseada em defeitos**, os critérios e requisitos de teste são oriundos do conhecimento sobre defeitos típicos cometidos no processo de desenvolvimento de software.
+
+A figura a seguir ilustra o relacionamento entre técnica, critério, requisito e caso de teste.
+
+![Relacionamentos entre Conceitos de Teste](../.gitbook/assets/relacionamento-conceitos.png)
+
+Independentemente de qual técnica determinado critério pertence, o papel de todo e qualquer critério de teste é derivar requisitos de teste que de forma direta ou indireta, particionam o domínio de entrada do produto em teste, forçando o testador a selecionar ao menos um elemento de cada subdomínio pra poder satisfazer o critério em questão. Desse modo, critérios mais rigorosos particionam mais o domínio de entrada do que critérios menos rigorosos. As figuras abaixo, adaptada de [Pezzè e Young \(2007\)](https://www.amazon.com/exec/obidos/ASIN/0471455938/acmorg-20) ilustram a segmentação ocacionada por diferentes critérios de teste supostamente dos menos rigorosos \(a\) para os mais rigorosos \(e\).
+
+| ![](../.gitbook/assets/dominio-01.png)  | ![](../.gitbook/assets/dominio-02.png)  |
+| :---: | :---: |
+| \(a\) | \(b\) |
+| ![](../.gitbook/assets/dominio-03.png)  | ![](../.gitbook/assets/dominio-04.png)  |
+| \(c\) | \(d\) |
+
+![\(e\)](../.gitbook/assets/dominio-05.png)
 
 Neste texto será dado ênfase à técnica de teste funcional e alguns de seus critérios. Para ilustrar a aplicação dos critérios de teste será utilizada a especificação de um programa simples, parte de um compilador, denominado `Identifier`. A especificação do referido programa é dada abaixo:
 
