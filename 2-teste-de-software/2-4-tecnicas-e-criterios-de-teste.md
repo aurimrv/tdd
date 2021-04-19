@@ -64,7 +64,7 @@ A título de ilustração, considerando a especofocação do programa `Identifie
   </thead>
   <tbody>
     <tr>
-      <td style="text-align:left">Tamanho (t) do identificador</td>
+      <td style="text-align:left">Tamanho do identificador</td>
       <td style="text-align:center">
         <p></p>
         <p>(1)</p>
@@ -75,7 +75,7 @@ A título de ilustração, considerando a especofocação do programa `Identifie
       </td>
     </tr>
     <tr>
-      <td style="text-align:left">Primeiro caractere (c) &#xE9; uma letra</td>
+      <td style="text-align:left">Primeiro caractere &#xE9; uma letra</td>
       <td style="text-align:center">
         <p>Sim</p>
         <p>(4)</p>
@@ -86,10 +86,10 @@ A título de ilustração, considerando a especofocação do programa `Identifie
       </td>
     </tr>
     <tr>
-      <td style="text-align:left">Demais caracteres s&#xE3;o letra ou d&#xED;gito</td>
+      <td style="text-align:left">Demais caracteres s&#xE3;o letras ou d&#xED;gitos</td>
       <td style="text-align:center">
         <p>Sim</p>
-        <p>(5)</p>
+        <p>(6)</p>
       </td>
       <td style="text-align:center">
         <p>N&#xE3;o</p>
@@ -101,13 +101,79 @@ A título de ilustração, considerando a especofocação do programa `Identifie
 
 Como foi mencionado anteriormente, ao aplicar um critério de teste considerando determinada fonte de informação, são gerados os requisitos de teste demandados pelo referido critério. No caso do critério Particionamento em Classe de Equivalência, esses requisitos correspondem a partições, como as exibidas na tabela acima. Observa-se que uma vez estabalecidos os requisitos, todo e qualquer conjunto de teste que satisfaça o critério terá ao menos cinco casos de teste: um para cobrir as classes válidas e outros quatro, um para cada classe inválida. Os números abaixo das partições servem para identificá-las.
 
-Por exemplo, dada a tabela acima, um possível caso de teste para cobrir as partições válidas seria: `("a1", Válido)`. Observa-se que esse teste é capaz de satisfazer as partições \(1\), \(4\) e \(5\) pois tem tamanho 2, inicia com letra e contém apenas mais um dígito após a primeira letra.
+Por exemplo, dada a tabela acima, um possível caso de teste para cobrir as partições válidas seria: `("a1", Válido)`. Observa-se que esse teste é capaz de satisfazer as partições \(1\), \(4\) e \(6\) pois tem tamanho 2, inicia com letra e contém apenas mais um dígito após a primeira letra.
 
 O segundo caso de teste, capaz de cobrir a partição inválida \(2\) é o `("", Inválido)`, ou seja, a cadeia vazia.
 
 As demais partições \(3\), \(4\) e \(5\) poderiam ser cobertas, por exemplo, com os casos de teste `("2B3", Inválido)`, `("Z-12", Inválido)`, `("A1b2C3d", Inválido)`, respectivamente.
 
 Desse modo, têm-se o conjunto de teste $$T_0 = $$ {`("a1", Válido)`, `("", Inválido)`, `("2B3", Inválido)`, `("Z-12", Inválido)`, `("A1b2C3d", Inválido)` } como sendo um conjunto adequado para o critério Particionamento em Classe de Equivalência, considerando as partições definidas.
+
+Observe que no caso do critério Particionamento em Classe de Equivalência, todo e qualquer valor dentro da partição é considerado um representante da classe de equivalência e pode ser selecionado para dar origem ao caso de teste. No critério de teste a seguir, a diferença é apenas essa, ou seja, quem pode ser utilizado para compor o caso de teste.
+
+### Critério Análise do Valor Limite
+
+De acordo com [Myers et al. \(2011\)](https://www.wiley.com/en-gb/The+Art+of+Software+Testing,+3rd+Edition-p-9781118133156), a experiência mostra que casos de teste que exploram condições limites têm uma maior probabilidade de encontrar erros. Tais condições correspondem a valores que estão exatamente ou imediatamente acima ou abaixo dos limitantes das classes de equivalência.
+
+Assim, esse critério é usado em conjunto com o Particionamento de Equivalência, mas ao invés dos dados de teste serem escolhidos aleatoriamente, eles devem ser selecionados de forma que o limitante de cada classe de equivalência seja explorado. Segundo [Myers et al. \(2011\)](https://www.wiley.com/en-gb/The+Art+of+Software+Testing,+3rd+Edition-p-9781118133156), além da escolha seletiva dos dados de teste, o outro ponto que difere este critério do Particionamento de Equivalência, é a observação do domínio de saída, diferentemente de outros autores, que já fazem essa consideração no próprio critério de Particionamento de Equivalência.
+
+Embora não existam diretrizes bem definidas que levem à determinação dos dados de teste, [Myers et al. \(2011\)](https://www.wiley.com/en-gb/The+Art+of+Software+Testing,+3rd+Edition-p-9781118133156) sugerem que as seguintes recomendações sejam seguidas:
+
+1. se a condição de entrada especifica um intervalo de valores, devem ser definidos dados de teste para os limites desse intervalo e dados de teste imediatamente subsequentes, que explorem as classes inválidas vizinhas desse intervalo. Por exemplo, se uma classe válida estiver no intervalo $$[1..100]$$, os seguintes dados de teste devem ser derivados: 0, 1, 2, 99, 100 e 101. Ou seja, o limite, e um elemento abaixo \(inválido\) e um acima \(válido\) do limite.
+2. se a condição de entrada especifica uma quantidade de valores, por exemplo, de 1 a 255 valores, devem ser definidos dados de teste com nenhum valor de entrada, somente um valor, dois valores, 254 valores, 255 valores e 256 valores de entrada.
+3. usar a diretriz i\) para as condições de saída.
+4. usar a diretriz ii\) para as condições de saída.
+5. se a entrada ou saída for um conjunto ordenado, deve ser dada maior atenção ao primeiro e último elemento desse conjunto;
+6. usar a intuição para definir outras condições limites.
+
+Considerando as partições definidas para o programa Identifier, a definição do que é letra ou dígito poderia ser mais detalhada, facilitando a identificação dos limites das classes de equivalência. Por exemplo, a tabela abaixo ilustra esse detalhamento. No caso, assume-se que há uma tabela de codficação de caracteres de modo que é possível determinar qual o caracter imediatamente anterior a "a", por exemplo. 
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align:left">Restri&#xE7;&#xF5;es de Entrada</th>
+      <th style="text-align:center">Classe V&#xE1;lida</th>
+      <th style="text-align:center">Classe Inv&#xE1;lida</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align:left">Tamanho do identificador</td>
+      <td style="text-align:center">
+        <p></p>
+        <p>(1)</p>
+      </td>
+      <td style="text-align:center">
+        <p></p>
+        <p>(2) (3)</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:left">Primeiro caractere &#xE9; uma letra</td>
+      <td style="text-align:center">
+        <p></p>
+        <p>(4)</p>
+      </td>
+      <td style="text-align:center">
+        <p></p>
+        <p>(5)</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:left">Demais caracteres s&#xE3;o letras ou d&#xED;gitos</td>
+      <td style="text-align:center">
+        <p></p>
+        <p>(6)</p>
+      </td>
+      <td style="text-align:center">
+        <p></p>
+        <p>(7)</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+Para facilitar a geração dos casos de teste considere utilizar a [Tabela ASCII](https://python-reference.readthedocs.io/en/latest/docs/str/ASCII.html) para identificação dos símbolos válidos e inválidos de cada classe.
 
 
 
