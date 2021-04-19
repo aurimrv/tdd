@@ -173,7 +173,7 @@ Considerando as partições definidas para o programa Identifier, a definição 
   </tbody>
 </table>
 
-Para facilitar a geração dos casos de teste considere utilizar a [Tabela ASCII](https://python-reference.readthedocs.io/en/latest/docs/str/ASCII.html) para identificação dos símbolos válidos e inválidos de cada classe.
+Para facilitar a geração dos casos de teste considere utilizar a [Tabela ASCII](https://python-reference.readthedocs.io/en/latest/docs/str/ASCII.html) para identificação dos símbolos válidos e inválidos de cada classe. Como pode ser observado, o critério Análise do Valor Limite pode ser considerado mais rigoroso pois exige bem mais casos de testes, e também satisfaz os requisitos demandados pelo critério Particionamento em Classe de Equivalência.
 
 
 
