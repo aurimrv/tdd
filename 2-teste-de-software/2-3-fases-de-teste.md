@@ -22,7 +22,7 @@ O ideal seria que a automatização respeitasse a pirâmide de teste, conforme d
 
 ![Pir&#xE2;mide de Teste: propor&#xE7;&#xE3;o de testes automatizados sugerida.](../.gitbook/assets/piramide.png)
 
-A pirâmide sugere que a maior quantidade de testes automatizados deve ser de testes unitários, seguidos de uma porção menos de testes de integração e uma porção menor ainda de testes de sistemas.
+A pirâmide sugere que a maior quantidade de testes automatizados deve ser de testes unitários, seguidos de uma porção menos de testes de integração e uma porção menor ainda de testes de sistemas. Segundo [Whittaker et al. \(2012\)](https://dl.acm.org/doi/book/10.5555/2207802), recomendação geral é que esses três testes sejam implementados na seguinte proporção: 70% como testes de unidades; 20% como testes de integração e 10% como testes de sistema.
 
-De toda forma, o que não pode deixar de ser feito é não se testar. O TDD prega que os testes devem ser construídos antes de se construir a aplicação e, desse modo, os testes estarão garantidos para assegurar a qualidade da aplicação desde o início e funcionaram como um importante instrumento para se evitar que defeitos ocasionais quebrem a aplicação sem serem descobertos rapidamente.
+De toda forma, o que não pode deixar de ser feito é não se testar. O TDD prega que os testes devem ser construídos antes de se construir a aplicação e, desse modo, os testes estarão garantidos para assegurar a qualidade da aplicação desde o início e funcionam como um importante instrumento para se evitar que defeitos ocasionais quebrem a aplicação sem serem descobertos rapidamente. Em outras palavras, o TDD oferece um _feedback_ instantâneo a cada mudança implementada.
 
