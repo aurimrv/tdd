@@ -1,6 +1,6 @@
 # 2.5 Considerações Finais
 
-Neste capítulo abordamos a terminologia e conceitos básicos sobre teste de software. Apresentamos uma breve descrição das prinicipais técnicas de teste, com ênfase para a técnica de teste funcional ou caixa-preta pois é ela a mais utilizada no contexto do TDD.
+Neste capítulo abordamos a terminologia e conceitos básicos sobre teste de software. Apresentamos uma breve descrição das principais técnicas de teste, com ênfase para a técnica de teste funcional ou caixa-preta pois é ela a mais utilizada no contexto do TDD.
 
 Em seguida, apresentamos dois dos critérios de teste mais populares da técnica funcional: particionamento em classe de equivalência e análise do valor limite.
 
