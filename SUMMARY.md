@@ -10,7 +10,7 @@
 ## 1 Introdução
 
 * [1.1 Considerações Iniciais](1-introducao/1-1-consideracoes-iniciais.md)
-* [1.2 Configuração do Ambiente](1-introducao/1-2-configuracao-do-ambiente.md)
+* [1.2 Configuração Inicial do Ambiente](1-introducao/1-2-configuracao-inicial-do-ambiente.md)
 * [1.3 TDD Básico](1-introducao/1-3-tdd-basico/README.md)
   * [1.3.1 Exemplo Simples](1-introducao/1-3-tdd-basico/1.3.1-exemplo-simples.md)
 * [1.4 Considerações Finais](1-introducao/1-4-consideracoes-finais.md)
@@ -22,4 +22,9 @@
 * [2.3 Fases de Teste](2-teste-de-software/2-3-fases-de-teste.md)
 * [2.4 Técnicas e Critérios de Teste](2-teste-de-software/2-4-tecnicas-e-criterios-de-teste.md)
 * [2.5 Considerações Finais](2-teste-de-software/2-5-consideracoes-finais.md)
+
+## 3 Desenvolvimento Dirigido por Teste
+
+* [3.1 Configuração do Ambiente](3-desenvolvimento-dirigido-por-teste/3-1-configuracao-do-ambiente.md)
+* [3.2 Verificando o Ambiente com TDD](3-desenvolvimento-dirigido-por-teste/3-2-verificando-o-ambiente-com-tdd.md)
 
