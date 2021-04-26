@@ -10,7 +10,7 @@ A figura a seguir ilustra o relacionamento entre técnica, critério, requisito 
 
 ![Relacionamentos entre Conceitos de Teste](../.gitbook/assets/relacionamento-conceitos.png)
 
-Independentemente de qual técnica determinado critério pertence, o papel de todo e qualquer critério de teste é derivar requisitos de teste que de forma direta ou indireta, particionam o domínio de entrada do produto em teste, forçando o testador a selecionar ao menos um elemento de cada subdomínio pra poder satisfazer o critério em questão. Desse modo, critérios mais rigorosos particionam mais o domínio de entrada do que critérios menos rigorosos. As figuras abaixo, adaptada de [Pezzè e Young \(2007\)](https://www.amazon.com/exec/obidos/ASIN/0471455938/acmorg-20) ilustram a segmentação ocacionada por diferentes critérios de teste supostamente dos menos rigorosos \(a\) para os mais rigorosos \(e\).
+Independentemente de qual técnica determinado critério pertence, o papel de todo e qualquer critério de teste é derivar requisitos de teste que de forma direta ou indireta, particionam o domínio de entrada do produto em teste, forçando o testador a selecionar ao menos um elemento de cada subdomínio pra poder satisfazer o critério em questão. Desse modo, critérios mais rigorosos particionam mais o domínio de entrada do que critérios menos rigorosos. As figuras abaixo, adaptada de [Pezzè e Young \(2007\)](https://www.amazon.com/exec/obidos/ASIN/0471455938/acmorg-20) ilustram a segmentação ocasionada por diferentes critérios de teste supostamente dos menos rigorosos \(a\) para os mais rigorosos \(e\).
 
 | ![](../.gitbook/assets/dominio-01.png)  | ![](../.gitbook/assets/dominio-02.png)  |
 | :---: | :---: |
@@ -52,7 +52,7 @@ Um dos problemas relacionado aos critérios funcionais é que muitas vezes a esp
 
 ### Critério Particionamento em Classe de Equivalência
 
-A título de ilustração, considerando a especofocação do programa `Identifier` e o critério Particionamento em Classes de Equivalência, são identificadas na tabela abaixo as condições de entrada e classes de equivalência válidas e inválidas segundo a interpretação dos autores.
+A título de ilustração, considerando a especificação do programa `Identifier` e o critério Particionamento em Classes de Equivalência, são identificadas na tabela abaixo as condições de entrada e classes de equivalência válidas e inválidas segundo a interpretação dos autores.
 
 <table>
   <thead>
@@ -99,7 +99,7 @@ A título de ilustração, considerando a especofocação do programa `Identifie
   </tbody>
 </table>
 
-Como foi mencionado anteriormente, ao aplicar um critério de teste considerando determinada fonte de informação, são gerados os requisitos de teste demandados pelo referido critério. No caso do critério Particionamento em Classe de Equivalência, esses requisitos correspondem a partições, como as exibidas na tabela acima. Observa-se que uma vez estabalecidos os requisitos, todo e qualquer conjunto de teste que satisfaça o critério terá ao menos cinco casos de teste: um para cobrir as classes válidas e outros quatro, um para cada classe inválida. Os números abaixo das partições servem para identificá-las.
+Como foi mencionado anteriormente, ao aplicar um critério de teste considerando determinada fonte de informação, são gerados os requisitos de teste demandados pelo referido critério. No caso do critério Particionamento em Classe de Equivalência, esses requisitos correspondem a partições, como as exibidas na tabela acima. Observa-se que uma vez estabelecidos os requisitos, todo e qualquer conjunto de teste que satisfaça o critério terá ao menos cinco casos de teste: um para cobrir as classes válidas e outros quatro, um para cada classe inválida. Os números abaixo das partições servem para identificá-las.
 
 Por exemplo, dada a tabela acima, um possível caso de teste para cobrir as partições válidas seria: `("a1", Válido)`. Observa-se que esse teste é capaz de satisfazer as partições \(1\), \(4\) e \(6\) pois tem tamanho 2, inicia com letra e contém apenas mais um dígito após a primeira letra.
 
@@ -126,7 +126,7 @@ Embora não existam diretrizes bem definidas que levem à determinação dos dad
 5. se a entrada ou saída for um conjunto ordenado, deve ser dada maior atenção ao primeiro e último elemento desse conjunto;
 6. usar a intuição para definir outras condições limites.
 
-Considerando as partições definidas para o programa Identifier, a definição do que é letra ou dígito poderia ser mais detalhada, facilitando a identificação dos limites das classes de equivalência. Por exemplo, a tabela abaixo ilustra esse detalhamento. No caso, assume-se que há uma tabela de codficação de caracteres de modo que é possível determinar qual o caracter imediatamente anterior a "a", por exemplo. 
+Considerando as partições definidas para o programa `Identifier`, a definição do que é letra ou dígito poderia ser mais detalhada, facilitando a identificação dos limites das classes de equivalência. Por exemplo, a tabela abaixo ilustra esse detalhamento. No caso, assume-se que há uma tabela de codficação de caracteres de modo que é possível determinar qual o caractere imediatamente anterior a "a", por exemplo. 
 
 <table>
   <thead>

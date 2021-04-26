@@ -6,7 +6,7 @@ O exemplo empregado neste livro foi extraído de [Percival \(2017\)](https://nov
 
 **Instação do Python e Ferramentas de Desenvolvimento**
 
-Inicialmente, faremos a instalação do Python, seu instalador de pacotes \(pip\) e o virtualenv, responsável pro criar um ambiente de execução de programas Python que pode ser personalizável a cada projeto, sem prejudicar a configuração global do sistema. Para isso, basta executar a sequência de comandos abaixo em um terminal Linux. No exemplo, é utilizado o [Linux Mint 20.1](https://www.linuxmint.com/download.php).
+Inicialmente, faremos a instalação do Python, seu instalador de pacotes \(pip\) e o `virtualenv`, responsável pro criar um ambiente de execução de programas Python que pode ser personalizável a cada projeto, sem prejudicar a configuração global do sistema. Para isso, basta executar a sequência de comandos abaixo em um terminal Linux. No exemplo, é utilizado o [Linux Mint 20.1](https://www.linuxmint.com/download.php).
 
 ```text
 sudo apt install python3
@@ -40,7 +40,7 @@ git version 2.25.1
 
 **Instalação do Framework django e Selenium**
 
-O [django](https://www.djangoproject.com/) é um framework para construçao de sistemas Web em Python e o [Selenium](https://selenium-python.readthedocs.io/) é uma ferramenta de captura e reprodução que permite a execução de testes automatizados via nevegador Web. Para instalar ambas as ferramentas e utiliza-las em nossos projetos, basta executar o comando abaixo:
+O [django](https://www.djangoproject.com/) é um framework para construção de sistemas Web em Python e o [Selenium](https://selenium-python.readthedocs.io/) é uma ferramenta de captura e reprodução que permite a execução de testes automatizados via navegador Web. Para instalar ambas as ferramentas e utilizá-las em nossos projetos, basta executar o comando abaixo:
 
 ```text
 $ pip3 install "django<=3.2" "selenium<4"
@@ -53,9 +53,9 @@ Requirement already satisfied: pytz in /usr/lib/python3/dist-packages (from djan
 Requirement already satisfied: urllib3 in /usr/lib/python3/dist-packages (from selenium<4) (1.25.8)
 ```
 
-O Selenium permite a execução dos testes em vários navegadores mas, para cada um deles, é necessário baixar um driver correspondente. No nosso exemplo, faremos o download dos driver para Firefox, denominado de [Gecko Driver](https://github.com/mozilla/geckodriver/releases), e Google Chrome, denominado [Chrome Driver](https://chromedriver.chromium.org/), conforme descrito a seguir. Você deve baixar o driver na versão compatível com a de seu navegador web. No caso abaixo, utilizamos o [Geck Driver 0.29.1](https://github.com/mozilla/geckodriver/releases) e o [Chrome Driver 90.0.4430.24](https://chromedriver.chromium.org/), ambos para sistemas Linux 64 bits.
+O Selenium permite a execução dos testes em vários navegadores mas, para cada um deles, é necessário baixar um driver correspondente. No nosso exemplo, faremos o download dos drivers para Firefox, denominado de [Gecko Driver](https://github.com/mozilla/geckodriver/releases), e Google Chrome, denominado [Chrome Driver](https://chromedriver.chromium.org/), conforme descrito a seguir. Você deve baixar o driver na versão compatível com a de seu navegador web. No caso abaixo, utilizamos o [Geck Driver 0.29.1](https://github.com/mozilla/geckodriver/releases) e o [Chrome Driver 90.0.4430.24](https://chromedriver.chromium.org/), ambos para sistemas Linux 64 bits.
 
-Primeiro é necessário fazer o download dos arquivos compactados com os drivers acima e, em seguida, a instalação de ambos os driver é feita simplesmente descompactando o conteúdo dos arquivos dentro da pasta `$HOME/.local/bin`, conforme apresentado a seguir:
+Primeiro é necessário fazer o download dos arquivos compactados com os drivers acima e, em seguida, a instalação de ambos os drivers é feita simplesmente descompactando o conteúdo dos arquivos dentro da pasta `$HOME/.local/bin`, conforme apresentado a seguir:
 
 ```text
 $ cd $HOME/.local/bin
@@ -88,7 +88,7 @@ ChromeDriver 90.0.4430.24 (4c6d850f087da467d926e8eddb76550aed655991-refs/branch-
 
 **Variáveis de Ambiente**
 
-Finalmente, para completar a instalação do ambiente, as seguintes variáveis de ambiente devem ser incluídas no final do arquivo `.bashrc`, localizado na raíz da área do usuário Linux.
+Finalmente, para completar a instalação do ambiente, as seguintes variáveis de ambiente devem ser incluídas no final do arquivo `.bashrc`, localizado na raiz da área do usuário Linux.
 
 ```text
 export PATH=$HOME/.local/bin:$PATH

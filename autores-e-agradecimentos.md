@@ -8,7 +8,7 @@ Pedro Sakuma Travi \(Santander\) possui vasta experiência no uso do TDD como me
 
 Eduardo Molina \(Raccoon\) possui experiência em desenvolvimento Python e contribui com a melhoria, detalhamento das explicações de todo código Python presente neste material. 
 
-A [Profa. Marilde Terezinha Prado Santos](http://www2.dc.ufscar.br/~marilde/) \(DC/UFSCar\) é especialista em Educação a Distância, organizadora do MBA Machine Learning in Production e contribui enormemente com o desenvolvimento do conteúdo aqui apresentado.
+A [Profa. Marilde Terezinha Prado Santos](http://www2.dc.ufscar.br/~marilde/) \(DC/UFSCar\) é especialista em Educação a Distância, organizadora do MBA _Machine Learning in Production_ e contribui enormemente com o desenvolvimento do conteúdo aqui apresentado.
 
 
 
