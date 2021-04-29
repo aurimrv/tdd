@@ -127,7 +127,7 @@ Até o momento, estamos utilizando a ferramenta Git para gerenciar as mudanças 
 
 Desse modo, para que possamos sincronizar o repositório local com o remoto, é importante que você crie uma conta no [GitHub](https://github.com/) e, após isso, crie um _token_ para permitir que o comando Git se comunique com seu repositório remoto no [GitHub](https://github.com/). 
 
-Assumindo que você já tenha criado sua conta no GitHub, a criação do token pode ser feita clicando sobre sua foto na conta e escolhendo a opção _Settings_, conforme imagem abaixo:
+Assumindo que você já tenha criado sua conta no GitHub, a criação do _token_ pode ser feita clicando sobre sua foto na conta e escolhendo a opção _Settings_, conforme imagem abaixo:
 
 ![Configura&#xE7;&#xF5;es no GitHub](../.gitbook/assets/github-01.png)
 
@@ -145,13 +145,13 @@ Na janela que irá abrir você deve fornecer um nome qualquer do _token_ \(`Toke
 
 ![](../.gitbook/assets/github-05.png)
 
-Feito isso, será apresentado o _token_ a você. Copie e cole em um arquivo texto pois você não será mais capaz de visualizá-lo assim que sair dessa tela. Se esqucer o número do token terá que criar outro.
+Feito isso, será apresentado o _token_ a você. Copie e cole em um arquivo texto pois você não será mais capaz de visualizá-lo assim que sair dessa tela. Se esquecer o número do _token_ terá que criar outro.
 
 ![Token de Acesso para o GitHub](../.gitbook/assets/github-06.png)
 
 #### Criando Repositório Remoto
 
-Para enviarmos o repositório local para o respositório remoto precisamos ainda criar um repositório vazio no GitHub. Para isso, basta clicar sobre sua foto e escolher a opção _Your repositories_. Em seguida, clicar no botão New, dar um nome para o repositório \(`superlists` no exemplo\), escolher a visibilidade desejada \(`public` no exemplo\) e clicar em _Create repository_.
+Para enviarmos o repositório local para o repositório remoto precisamos ainda criar um repositório vazio no GitHub. Para isso, basta clicar sobre sua foto e escolher a opção _Your repositories_. Em seguida, clicar no botão _New_, dar um nome para o repositório \(`superlists` no exemplo\), escolher a visibilidade desejada \(`public` no exemplo\) e clicar em _Create repository_.
 
 ![Acesso ao Reposit&#xF3;rios](../.gitbook/assets/github-07.png)
 
@@ -167,7 +167,7 @@ Feito isso estamos prontos para enviar os arquivos do diretório local para o re
 
 O primeiro passo \(linha 1\) é adicionar os dados do repositório remoto à origem do nosso repositório. Em seguida, para enviar os dados do repositório local para o remoto utilizamos o comando da linha 2, `git push`.
 
-Ao executar esse comando, o Git irá solicitar nosso login \(`aurimrv` no exemlo\) e a senha que deve ser o _token_ criado anteriormente. 
+Ao executar esse comando, o Git irá solicitar nosso login \(`aurimrv` no exemplo\) e a senha que deve ser o _token_ criado anteriormente. 
 
 ```text
 (superlists) auri@av:~/tdd/superlists/superlists$ git remote add origin https://github.com/aurimrv/superlists.git
@@ -207,7 +207,7 @@ A tela a seguir agora exibe a descrição do projeto na tela inicial do reposit�
 
 #### Atualizando o Repositório Local com os Dados do Repositório Remoto
 
-Uma vez que criamos o arquivo README.md remotamente, ele não está presente no nosso diretório local. Para atualizar nossa cópia local podemos utilizar os comandos das linhas 1, 4 e 12 abaixo e manter tudo sincronizado.
+Uma vez que criamos o arquivo `README.md` remotamente, ele não está presente no nosso diretório local. Para atualizar nossa cópia local podemos utilizar os comandos das linhas 1, 4 e 12 abaixo e manter tudo sincronizado.
 
 ```text
 (superlists) auri@av:~/tdd/superlists/superlists$ git checkout master
@@ -243,6 +243,7 @@ total 144
 -rw-rw-r-- 1 auri auri    173 abr 27 19:53 README.md
 drwxrwxr-x 3 auri auri   4096 abr 26 20:37 superlists
 (superlists) auri@av:~/tdd/superlists/superlists$ 
-
 ```
+
+Para evitar conflitos em repositórios é importante manter a sincronização. Desse modo, uma das práticas recomendadas no desenvolvimento é a realização de _commits_ frequentes.
 

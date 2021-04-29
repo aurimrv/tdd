@@ -48,7 +48,7 @@ Para fazermos o teste passar é necessário colocarmos uma instância do `django
 (superlists) auri@av:~/tdd/superlists$ 
 ```
 
-Em caso de sucesso, o comando não emite qualquer saída, mas irá criar um subdiretório superlists abaixo do diretório corrente. Parte da estrutura de diretórios do ambiente virtual com o projeto do `django` fica conforme apresentado na figura abaixo:
+Em caso de sucesso, o comando não emite qualquer saída, mas irá criar um subdiretório `superlists` abaixo do diretório corrente. Parte da estrutura de diretórios do ambiente virtual com o projeto do `django` fica conforme apresentado na figura abaixo:
 
 ```text
 (superlists) auri@av:~/tdd/superlists$ tree -L 3 .

@@ -28,4 +28,5 @@
 * [3.1 Configuração do Ambiente](3-desenvolvimento-dirigido-por-teste/3-1-configuracao-do-ambiente.md)
 * [3.2 Verificando o Ambiente com TDD](3-desenvolvimento-dirigido-por-teste/3-2-verificando-o-ambiente-com-tdd.md)
 * [3.3 Controle de Versão do Projeto](3-desenvolvimento-dirigido-por-teste/3-3-controle-de-versao-do-projeto.md)
+* [3.4 Teste Funcional com UnitTest](3-desenvolvimento-dirigido-por-teste/3-4-teste-funcional-com-unittest.md)
 

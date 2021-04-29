@@ -57,7 +57,7 @@ virtualenvwrapper.user_scripts creating /home/auri/tdd/superlists/bin/postactiva
 virtualenvwrapper.user_scripts creating /home/auri/tdd/superlists/bin/get_env_details
 ```
 
-Ao final da execução do comando `mkvirtualenv`, observa-se uma pequena mudança no prompt de comando, ao invés de aparecer apenas um sinal de `$`, o prompt passa a ser precedido por `(superlists)$` , indicando que você está conectado ao ambiente virtual. A estrutrura de diretório do ambiente virtual, considerando apenas dois níveis, é dada abaixo:
+Ao final da execução do comando `mkvirtualenv`, observa-se uma pequena mudança no _prompt_ de comando, ao invés de aparecer apenas um sinal de `$`, o _prompt_ passa a ser precedido por `(superlists)$` , indicando que você está conectado ao ambiente virtual. A estrutura de diretório do ambiente virtual, considerando apenas dois níveis, é dada abaixo:
 
 ```text
 $ tree -L 2 superlists
