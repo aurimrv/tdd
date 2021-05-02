@@ -81,5 +81,70 @@ Como comentado por Percival \(2017\), esse ciclo e combinação de testes funcio
 
 > "Os testes funcionais devem ajudar você a construir uma aplicação com as funcionalidades corretas e garantir que você não causará falhas acidentalmente. Os testes de unidade deveriam ajudá-lo a escrever um código que seja limpo e livre de defeitos." \([Percival, 2017](http://www.obeythetestinggoat.com/pages/book.html)\)
 
+#### Teste de Unidade no Django
+
+Nessa seção veremos como escrever um teste unitário para view criada pelo Django. O _template_ do teste unitário criado pelo Django é ilustrado abaixo:
+
+```text
+(superlists) auri@av:~/tdd/superlists/superlists$ cat lists/tests.py 
+from django.test import TestCase
+
+# Create your tests here.
+```
+
+Como observado na linha 2, o Django utiliza uma classe `TestCase` que é uma versão estendida da classe `unittest.TestCase`. Essa classe possui alguns recursos adicionais específicos do Django que faremos uso no restante deste capítulo.
+
+Para iniciarmos, vamos redigir um teste que falhe propositalmente para verificar se o ambiente de execução está funcionando corretamente. Desse modo, o arquivo `lists/tests.py` foi alterado conforme abaixo:
+
+```text
+from django.test import TestCase
+
+class SmokeTest(TestCase):
+	def test_bad_maths(self):
+		self.assertEquals( 1 + 1, 3)
+```
+
+A execução desse teste é feita conforme abaixo:
+
+```text
+(superlists) auri@av:~/tdd/superlists/superlists$ python manage.py test
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+F
+======================================================================
+FAIL: test_bad_maths (lists.tests.SmokeTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/auri/insync/tdd/superlists/superlists/lists/tests.py", line 5, in test_bad_maths
+    self.assertEquals( 1 + 1, 3)
+AssertionError: 2 != 3
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Destroying test database for alias 'default'...
+```
+
+Observe que diferentemente do `functional_tests.py` que era executado diretamente, o teste do Django é executado de forma diferente, com o comando `python manage.py test`. Com o resultado acima o executor parece funcionar normalmente e esse é um bom momento para colocarmos nosso projeto sob controle de versão. Os passos para isso, adaptados de [Percival \(2017\)](http://www.obeythetestinggoat.com/pages/book.html), são dados abaixo:
+
+```text
+(superlists) auri@av:~/tdd/superlists/superlists$ git status         # Exibe que lists/ não está sob controle de versão
+(superlists) auri@av:~/tdd/superlists/superlists$ git add lists
+(superlists) auri@av:~/tdd/superlists/superlists$ git diff --staged  # Mostra as diferenças que serão confirmadas
+(superlists) auri@av:~/tdd/superlists/superlists$ git commit -m "Add app for lists, with deliberately failing unit test"
+(superlists) auri@av:~/tdd/superlists/superlists$ git push           # Envia alterações para o GitHub
+```
+
+#### Explicação Básica sobre Django
+
+Conforme mencionado anteriormente, o Django está estruturado conforme o padrão MVC. Desse modo, ele tem modelos mas, conforme comentado por [Percival \(2017\)](http://www.obeythetestinggoat.com/pages/book.html), suas _views_ estão mais para controladores, e são os _templates_ que, na verdade, compõem a visão. De modo geral, como qualquer servidor Web, o papel principal do Django é decidir o que fazer ao receber uma requisição via URL.
+
+O fluxo do Django pode ser resumido a:
+
+1. Uma requisição HTTP chega a um URL respecífico;
+2. O Django utiliza algumas regras para decidir qual função de _view_ deve lidar com a requisição \(resolver a URL\);
+3. A função _view_ processa a requisição e devolve uma resposta HTTP.
+
 
 
