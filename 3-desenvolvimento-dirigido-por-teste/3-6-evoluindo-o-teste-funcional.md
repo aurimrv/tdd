@@ -286,5 +286,5 @@ class HomePageTest(TestCase):
 		self.assertEquals(html, expected_html)
 ```
 
-Observe que as mudanças em relação ao teste anterior é o `import` na linha 4 e as linhas 18 e 19 que substituíram as antigas linhas de 17 a 19 \(_asserts_\). Com a chamada da função `render_to_string`, o Django nos devolve todo o conteúdo renderizado e armazena na variável `expected_html` \(linha 18\) que é comparada com a resposta obtida da requisição \(linha 17\).
+Observe que as mudanças em relação ao teste anterior é o `import` na linha 4 e as linhas 18 e 19 que substituíram as antigas linhas de 17 a 19 \(_asserts_\). Com a chamada da função `render_to_string`, o Django nos devolve todo o conteúdo renderizado e armazena na variável `expected_html` \(linha 18\) que é comparada, na linha 19, com a resposta decodificada obtida da requisição \(linha 17\).
 
