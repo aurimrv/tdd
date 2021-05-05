@@ -288,7 +288,7 @@ class HomePageTest(TestCase):
 
 Observe que as mudanças em relação ao teste anterior é o `import` na linha 4 e as linhas 18 e 19 que substituíram as antigas linhas de 17 a 19 \(_asserts_\). Com a chamada da função `render_to_string`, o Django nos devolve todo o conteúdo renderizado e armazena na variável `expected_html` \(linha 18\) que é comparada, na linha 19, com a resposta decodificada obtida da requisição \(linha 17\).
 
-Entratanto, quando usamos _templates_, o Django oferece uma ferramenta ainda mais simples de verificarmos se nossa aplicação respondeu corretamente. Ela se chama [Django Test Clien](https://docs.djangoproject.com/en/3.2/topics/testing/tools/#the-test-client)t. Para mais informações sobre essa ferramenta, o leitor interessado pode consultar a documentação oficial do Django em [https://docs.djangoproject.com/en/3.2/topics/testing/tools/\#the-test-client](https://docs.djangoproject.com/en/3.2/topics/testing/tools/#the-test-client). Nosso caso de teste reescrito para fazer uso do Django Test Client é apresentado abaixo com os comandos do teste anterior em comentários:
+Entretanto, quando usamos _templates_, o Django oferece uma ferramenta ainda mais simples de verificarmos se nossa aplicação respondeu corretamente. Ela se chama [Django Test Clien](https://docs.djangoproject.com/en/3.2/topics/testing/tools/#the-test-client)t. Para mais informações sobre essa ferramenta, o leitor interessado pode consultar a documentação oficial do Django em [https://docs.djangoproject.com/en/3.2/topics/testing/tools/\#the-test-client](https://docs.djangoproject.com/en/3.2/topics/testing/tools/#the-test-client). Nosso caso de teste reescrito para fazer uso do [Django Test Client](https://docs.djangoproject.com/en/3.2/topics/testing/tools/#the-test-client) é apresentado abaixo com os comandos do teste anterior em comentários:
 
 ```text
 from django.urls import resolve
@@ -309,4 +309,101 @@ class HomePageTest(TestCase):
 Observe que agora o nosso teste `test_home_page_returns_correct_htm`l ficou muito mais simples. Ao invés de chamarmos manualmente o objeto `HttpRequest` e de chamar a função de _view_, basta fazermos uma chamada a `self.client.get`, passando a URL desejada.
 
 Finalmente, para fazermos o teste se o retorno foi bem sucedido, utilizamos o método `assertTemplateUsed` da classe `TestCase` do Django. Ele nos permite confrontar a resposta do cliente com o conteúdo do _template_ de forma mais simples.
+
+Conforme destaca [Percival \(2017\)](http://www.obeythetestinggoat.com/pages/book.html), o ponto principal ao usarmos o [Django Test Client](https://docs.djangoproject.com/en/3.2/topics/testing/tools/#the-test-client) é que, "ao invés de testarmos constantes, estamos testando nossa implementação", ou seja, eliminamos constantes do nosso código de teste e os deixamos menos sujeitos a manutenções em função das alterações no código da aplicação. Isso é muito importante para minimizarmos os custos de automatização dos testes.
+
+O resultado da execução do teste utilizando o [Django Test Client](https://docs.djangoproject.com/en/3.2/topics/testing/tools/#the-test-client) é dado abaixo:
+
+```text
+(superlists) auri@av:~/tdd/superlists/superlists$ python manage.py test
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.004s
+
+OK
+Destroying test database for alias 'default'...
+```
+
+Se ainda não tivermos confiantes de que esse novo modo de testar o retorno da página está funcionando, podemos fazer uma alteração proposital no teste para verificar se o teste ira falhar \(linha 13 - _template_ trocado para `'wrong.html'`\). No exemplo abaixo, ao executar o teste, o resultado indica uma falha pois o _template_ não foi encontrado.
+
+```text
+from django.urls import resolve
+from django.test import TestCase
+from lists.views import home_page
+
+class HomePageTest(TestCase):
+
+	def test_root_url_resolves_to_home_page_view(self):
+		found = resolve('/')
+		self.assertEquals(found.func, home_page)
+
+	def test_home_page_returns_correct_html(self):
+		response = self.client.get('/')
+		self.assertTemplateUsed(response, 'wrong.html')
+```
+
+Com a alteração, o resultado da execução do teste falha conforme abaixo:
+
+```text
+(superlists) auri@av:~/tdd/superlists/superlists$ python manage.py test
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+F.
+======================================================================
+FAIL: test_home_page_returns_correct_html (lists.tests.HomePageTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/auri/insync/tdd/superlists/superlists/lists/tests.py", line 13, in test_home_page_returns_correct_html
+    self.assertTemplateUsed(response, 'wrong.html')
+  File "/home/auri/insync/tdd/superlists/lib/python3.8/site-packages/django/test/testcases.py", line 657, in assertTemplateUsed
+    self.assertTrue(
+AssertionError: False is not true : Template 'wrong.html' was not a template used to render the response. Actual template(s) used: home.html
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.005s
+
+FAILED (failures=1)
+Destroying test database for alias 'default'...
+```
+
+Refatorado nosso caso de teste unitário, é hora de colocarmos as modificações sob controle de versão. Utilizamos, em sequência, os comandos: `git status`, `git add .`, `git commit` e `git push`. O resultado é mostrado abaixo:
+
+```text
+(superlists) auri@av:~/tdd/superlists/superlists$ git status
+No ramo master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (utilize "git add <arquivo>..." para atualizar o que será submetido)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   lists/tests.py
+
+Arquivos não monitorados:
+  (utilize "git add <arquivo>..." para incluir o que será submetido)
+	lists/templates/
+
+nenhuma modificação adicionada à submissão (utilize "git add" e/ou "git commit -a")
+(superlists) auri@av:~/tdd/superlists/superlists$ git add .
+(superlists) auri@av:~/tdd/superlists/superlists$ git commit -am "Refactor home page view to use template"
+[master 97480f8] Refactor home page view to use template
+ 2 files changed, 5 insertions(+), 8 deletions(-)
+ create mode 100644 lists/templates/home.html
+(superlists) auri@av:~/tdd/superlists/superlists$ git push
+Username for 'https://github.com': aurimrv
+Password for 'https://aurimrv@github.com': 
+Enumerating objects: 9, done.
+Counting objects: 100% (9/9), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (6/6), 581 bytes | 581.00 KiB/s, done.
+Total 6 (delta 3), reused 0 (delta 0)
+remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
+
+```
+
+Finalmente, para encerrar esta seção, terminamos com a dica de [Percival \(2017\)](http://www.obeythetestinggoat.com/pages/book.html) sobre refatoração e TDD.
+
+> "Ao refatorar, trabalhe no código ou nos testes, mas não em ambos ao mesmo tempo." \([Percival, 2017](http://www.obeythetestinggoat.com/pages/book.html)\)
 
