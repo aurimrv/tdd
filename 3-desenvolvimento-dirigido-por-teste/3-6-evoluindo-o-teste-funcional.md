@@ -288,3 +288,25 @@ class HomePageTest(TestCase):
 
 Observe que as mudanças em relação ao teste anterior é o `import` na linha 4 e as linhas 18 e 19 que substituíram as antigas linhas de 17 a 19 \(_asserts_\). Com a chamada da função `render_to_string`, o Django nos devolve todo o conteúdo renderizado e armazena na variável `expected_html` \(linha 18\) que é comparada, na linha 19, com a resposta decodificada obtida da requisição \(linha 17\).
 
+Entratanto, quando usamos _templates_, o Django oferece uma ferramenta ainda mais simples de verificarmos se nossa aplicação respondeu corretamente. Ela se chama [Django Test Clien](https://docs.djangoproject.com/en/3.2/topics/testing/tools/#the-test-client)t. Para mais informações sobre essa ferramenta, o leitor interessado pode consultar a documentação oficial do Django em [https://docs.djangoproject.com/en/3.2/topics/testing/tools/\#the-test-client](https://docs.djangoproject.com/en/3.2/topics/testing/tools/#the-test-client). Nosso caso de teste reescrito para fazer uso do Django Test Client é apresentado abaixo com os comandos do teste anterior em comentários:
+
+```text
+from django.urls import resolve
+from django.test import TestCase
+from lists.views import home_page
+
+class HomePageTest(TestCase):
+
+	def test_root_url_resolves_to_home_page_view(self):
+		found = resolve('/')
+		self.assertEquals(found.func, home_page)
+
+	def test_home_page_returns_correct_html(self):
+		response = self.client.get('/')
+		self.assertTemplateUsed(response, 'home.html')
+```
+
+Observe que agora o nosso teste `test_home_page_returns_correct_htm`l ficou muito mais simples. Ao invés de chamarmos manualmente o objeto `HttpRequest` e de chamar a função de _view_, basta fazermos uma chamada a `self.client.get`, passando a URL desejada.
+
+Finalmente, para fazermos o teste se o retorno foi bem sucedido, utilizamos o método `assertTemplateUsed` da classe `TestCase` do Django. Ele nos permite confrontar a resposta do cliente com o conteúdo do _template_ de forma mais simples.
+
