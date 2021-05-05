@@ -90,7 +90,7 @@ AssertionError
 (superlists) auri@av:~/tdd/superlists/superlists$
 ```
 
-Como será observado, o teste faz com que a janela do Firefox abra com o conteúdo abaixo e, desse modo, como o título não contém a palavra To-Do, o teste apresenta uma mensagem de erro no prompt, conforme mostrado nas linhas de 5 a 8 dos comandos acima.
+Como será observado, o teste faz com que a janela do Firefox abra com o conteúdo abaixo e, desse modo, como o título não contém a palavra To-Do, o teste apresenta uma mensagem de erro no _prompt_, conforme mostrado nas linhas de 5 a 8 dos comandos acima.
 
 ![Tela do django com a execu&#xE7;&#xE3;o do caso de teste](../.gitbook/assets/django-02.png)
 
@@ -221,7 +221,7 @@ Ran 1 test in 2.323s
 FAILED (failures=1)
 ```
 
-No exemplo acima podemos observar que o teste falhou pois a string "To-Do" não foi encontrada no título do navagedor, o qual apresenta a string padrão da execução do django; "The install worked successfully! Congratulations!"
+No exemplo acima podemos observar que o teste falhou pois a string "To-Do" não foi encontrada no título do navegador, o qual apresenta a string padrão da execução do django; "The install worked successfully! Congratulations!"
 
 Novamente, devido as mudanças no arquivo de casos de testes é interessante fazermos um novo commit para confirmar as alterações. No exemplo abaixo, utilizamos um `git commit -a` que adiciona e confirma automaticamente todas as mudanças realizadas no repositório.
 

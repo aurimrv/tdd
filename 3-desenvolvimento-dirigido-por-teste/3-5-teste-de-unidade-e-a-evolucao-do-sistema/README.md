@@ -1,4 +1,4 @@
-# 3.5 Teste de unidade e a evolução do sistema
+# 3.5 Teste de Unidade e a Evolução do Sistema
 
 Na seção anterior, iniciamos a escrita de um teste funcional que buscava um site que apresentasse título "To-Do" que não foi encontrado e, desse modo, o teste falhou.
 
