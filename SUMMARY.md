@@ -32,4 +32,5 @@
 * [3.5 Teste de Unidade e a Evolução do Sistema](3-desenvolvimento-dirigido-por-teste/3-5-teste-de-unidade-e-a-evolucao-do-sistema/README.md)
   * [3.5.1 Teste de Unidade de uma View](3-desenvolvimento-dirigido-por-teste/3-5-teste-de-unidade-e-a-evolucao-do-sistema/3-5-1-teste-de-unidade-de-uma-view.md)
 * [3.6 Evoluindo o Teste Funcional](3-desenvolvimento-dirigido-por-teste/3-6-evoluindo-o-teste-funcional.md)
+* [3.7 Revisando o Processo do TDD](3-desenvolvimento-dirigido-por-teste/3-7-revisando-o-processo-do-tdd.md)
 

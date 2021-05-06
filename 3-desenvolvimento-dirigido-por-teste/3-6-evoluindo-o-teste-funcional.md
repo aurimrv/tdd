@@ -407,3 +407,186 @@ Finalmente, para encerrar esta seção, terminamos com a dica de [Percival \(201
 
 > "Ao refatorar, trabalhe no código ou nos testes, mas não em ambos ao mesmo tempo." \([Percival, 2017](http://www.obeythetestinggoat.com/pages/book.html)\)
 
+#### Corrigindo a Aplicação para Evoluir no Atendimento do Teste Funcional
+
+Agora que refatoramos nosso teste unitário, podemos iniciar a correção da nossa aplicação para evoluir no atendimento do teste funcional. Para termos uma ideia, ao executar os testes funcionais, obteremos o seguinte resultado:
+
+```text
+(superlists) auri@av:~/tdd/superlists/superlists$ python functional_tests.py 
+E
+======================================================================
+ERROR: test_can_start_a_list_and_retrieve_it_later (__main__.NewVsitorTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+...
+selenium.common.exceptions.NoSuchElementException: Message: Unable to locate element: h1
+
+
+----------------------------------------------------------------------
+Ran 1 test in 1.955s
+
+FAILED (errors=1)
+```
+
+O erro reportado na linha 17 é de que não foi possível encontrar o elemento `h1`. Realmente, não usamos `h1` em nosso _template_. Assim sendo, podemos melhorar nossa aplicação editando o arquivo `lists/templates/home.html` conforme abaixo:
+
+```text
+<html>
+	<head>
+		<title>To-Do lists</title>
+	</head>
+	<body>
+		<h1>Your To-Do list</h1>
+	</body>
+</html>
+```
+
+Com a alteração, o resultado dos testes muda. Agora o Selenium não está encontrando o elemento com `id="id_new_item"`.
+
+```text
+(superlists) auri@av:~/tdd/superlists/superlists$ python functional_tests.py 
+E
+======================================================================
+ERROR: test_can_start_a_list_and_retrieve_it_later (__main__.NewVsitorTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+...
+selenium.common.exceptions.NoSuchElementException: Message: Unable to locate element: [id="id_new_item"]
+
+
+----------------------------------------------------------------------
+Ran 1 test in 2.041s
+
+FAILED (errors=1)
+
+```
+
+Vamos resolver isso alterando novamente nosso _template_ `lists/templates/home.html`. Podemos incluir o código HTML conforme abaixo:
+
+```text
+<html>
+	<head>
+		<title>To-Do lists</title>
+	</head>
+	<body>
+		<h1>Your To-Do list</h1>
+		<input id="id_new_item" />
+	</body>
+</html>
+```
+
+Evoluímos, agora nossos testes param na mensagem abaixo:
+
+```text
+(superlists) auri@av:~/tdd/superlists/superlists$ python functional_tests.py 
+F
+======================================================================
+FAIL: test_can_start_a_list_and_retrieve_it_later (__main__.NewVsitorTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "functional_tests.py", line 30, in test_can_start_a_list_and_retrieve_it_later
+    self.assertEqual(
+AssertionError: '' != 'Enter a to-do item'
++ Enter a to-do item
+
+----------------------------------------------------------------------
+Ran 1 test in 2.360s
+
+FAILED (failures=1)
+```
+
+Vamos melhorar nosso _template_ para atender a essa demanda dos testes funcionais. Para isso, o código do nosso _template_ `lists/templates/home.html`ficará conforme abaixo. Utilizamos o atributo `placeholder` do HTML para dica para um item ser fornecido.
+
+```text
+<html>
+	<head>
+		<title>To-Do lists</title>
+	</head>
+	<body>
+		<h1>Your To-Do list</h1>
+		<input id="id_new_item" placeholder="Enter a to-do item" />
+	</body>
+</html>
+```
+
+Avançamos mais um pouco e o resultado dos nossos testes agora indicam um erro por não encontrar o elemento com `id="id_list_table"`.
+
+```text
+(superlists) auri@av:~/tdd/superlists/superlists$ python functional_tests.py 
+E
+======================================================================
+ERROR: test_can_start_a_list_and_retrieve_it_later (__main__.NewVsitorTest)
+----------------------------------------------------------------------
+...
+selenium.common.exceptions.NoSuchElementException: Message: Unable to locate element: [id="id_list_table"]
+
+
+----------------------------------------------------------------------
+Ran 1 test in 3.242s
+
+FAILED (errors=1)
+```
+
+Vamos a ele então. A correção do nosso _template_ para atender a essa demanda do teste funcional pode ser conforme abaixo:
+
+```text
+<html>
+	<head>
+		<title>To-Do lists</title>
+	</head>
+	<body>
+		<h1>Your To-Do list</h1>
+		<input id="id_new_item" placeholder="Enter a to-do item" />
+		<table id="id_list_table">
+		</table>
+	</body>
+</html>
+```
+
+Com a inclusão da tag `table`, a execução dos testes para em um novo erro relacionado com a linha 51 do nosso arquivo `functional_tests.py`. Parece um erro meio obscuro e está relacionado com aquele `assertTrue` contendo o comando `any` dentro dela.
+
+```text
+(superlists) auri@av:~/tdd/superlists/superlists$ python functional_tests.py 
+F
+======================================================================
+FAIL: test_can_start_a_list_and_retrieve_it_later (__main__.NewVsitorTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "functional_tests.py", line 51, in test_can_start_a_list_and_retrieve_it_later
+    self.assertTrue(
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 1 test in 3.044s
+
+FAILED (failures=1)
+```
+
+Da forma como o `assertTrue` está a mensagem de erro gerada não é muito significativa. A maioria dos métodos `assert` do `unittest` aceitam um último parâmetro que é uma string exibida quando o `assert` falha. Podemos utilizar esse recurso para oferecer uma mensagem de erro mais significativa nesse caso. O comando `assertTrue` poderia ser reescrito para:
+
+```text
+		self.assertTrue(
+			any(row.text == '1: Buy peacock featers' for row in rows),
+			"New to-do item not appear in table"
+		)
+```
+
+Com isso, a mensagem exibida ficou mais clara, correto?! Entretanto, fazer esse teste passar irá demandar um esforço maior pois precisaremos processar os dados enviados no formulário. Faremos isso no próximo capítulo pois precisaremos, além de processar, armazenar os dados em um banco de dados para posteriormente recuperarmos os itens da lista.
+
+```text
+(superlists) auri@av:~/tdd/superlists/superlists$ python functional_tests.py 
+F
+======================================================================
+FAIL: test_can_start_a_list_and_retrieve_it_later (__main__.NewVsitorTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "functional_tests.py", line 51, in test_can_start_a_list_and_retrieve_it_later
+    self.assertTrue(
+AssertionError: False is not true : New to-do item not appear in table
+
+----------------------------------------------------------------------
+Ran 1 test in 3.313s
+
+FAILED (failures=1)
+```
+
