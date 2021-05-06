@@ -37,4 +37,5 @@
 ## 4 TDD E BANCO DE DADOS
 
 * [4.1 Envio e Processamento de Requisição POST](4-tdd-e-banco-de-dados/4-1-envio-de-requisicao-post.md)
+* [4.2 Banco de Dados no Django](4-tdd-e-banco-de-dados/4-2-banco-de-dados-no-django.md)
 
