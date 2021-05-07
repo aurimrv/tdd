@@ -4,7 +4,7 @@ Continuando nossa implementação, observamos que, para que os itens da lista fi
 
 No caso do Django podemos contar com a disponibilidade de um mecanismo denominado _Object-Relational Mapper_ \(ORM\) ou Mapeador Objeto-Relacional, que transforma objetos de nossa aplicação em tabelas de um banco de dados relacional.
 
-Como destaca [Percival \(2017\)](http://www.obeythetestinggoat.com/pages/book.html), nada melhor do que escrever um teste de unidade para conhecer melhor o mecanismo de ORM e como ele pode ser utilizado na melhoria de nossa aplicação. Desse modo, podemos criar uma nova classe de teste dentro de nosso arquivo `lists/tests.py`. O código da mesma segue abaixo. Observe que omitimos o restante do código que estava no arquivo tests.py para melhor viasualização.
+Como destaca [Percival \(2017\)](http://www.obeythetestinggoat.com/pages/book.html), nada melhor do que escrever um teste de unidade para conhecer melhor o mecanismo de ORM e como ele pode ser utilizado na melhoria de nossa aplicação. Desse modo, podemos criar uma nova classe de teste dentro de nosso arquivo `lists/tests.py`. O código da mesma segue abaixo. Observe que omitimos o restante do código que estava no arquivo tests.py para melhor visualização.
 
 ```text
 ...
@@ -94,7 +94,7 @@ FAILED (errors=1)
 Destroying test database for alias 'default'...
 ```
 
-A solução para isso é transformar nosso objeto `Item` em um verdadeiro Model do Django, herdando da classe `models.Model`.
+A solução para isso é transformar nosso objeto `Item` em um verdadeiro _Model_ do Django, herdando da classe `models.Model`.
 
 ```text
 from django.db import models
@@ -233,7 +233,7 @@ Please select a fix:
 Select an option: 2
 ```
 
-Ao tentar realizar a migração, o Django nos alerta que não podemos deixar nenhum campo com valor null. Como deixamos, ele sugere duas possíveis alternativas. Escolhemos a segunda mas, caso queiramos eliminar esse problema, basta incluirmos o valor padrão na nossa classe conforme abaixo e realizar uma nova migração.
+Ao tentar realizar a migração, o Django nos alerta que não podemos deixar nenhum campo com valor `null`. Como deixamos, ele sugere duas possíveis alternativas. Escolhemos a segunda mas, caso queiramos eliminar esse problema, basta incluirmos o valor padrão na nossa classe conforme abaixo e realizar uma nova migração.
 
 ```text
 from django.db import models
@@ -310,7 +310,7 @@ To https://github.com/aurimrv/superlists.git
 
 Com todos os testes unitários passando, está na hora de melhorarmos os testes para garantir que um item submetido via POST seja salvo no banco de dados e, posteriormente, recuperado.
 
-Para fazer isso, podemos modificar ligeiramente o teste `test_can_save_a_POST_request`, já presente no nosso conjunto de teste em lists/tests.py, conforme abaixo. Inserimos nele as linhas de 18 a 21. O que essas linhas fazem é 1\) verificar se um novo item foi salvo no banco de dados; 2\) recuperar o primeiro elemento salvo; e 3\) verificar se o texto nesse elemento corresponde ao item submetido via POST.
+Para fazer isso, podemos modificar ligeiramente o teste `test_can_save_a_POST_request`, já presente no nosso conjunto de teste em `lists/tests.py`, conforme abaixo. Inserimos nele as linhas de 18 a 21. O que essas linhas fazem é 1\) verificar se um novo item foi salvo no banco de dados; 2\) recuperar o primeiro elemento salvo; e 3\) verificar se o texto nesse elemento corresponde ao item submetido via POST.
 
 ```text
 from django.urls import resolve
@@ -539,7 +539,7 @@ def home_page(request):
 	})
 ```
 
-A solução acima trata com sucesso o nosso problema de salvar itens apenas quando a página aceitar requisões via POST. A variável `new_item_text` guarda o texto submetido via POST ou um string vazio em outras ocasiões. Além disso, obseva-se que quando for uma requisição POST utilizamos em seguida o método `Item.objects.create()` que também cria um item e o armazena no banco sem a necessidade do `save()`. Com isso, conseguimos executar os testes com sucesso.
+A solução acima trata com sucesso o nosso problema de salvar itens apenas quando a página aceitar requisições via POST. A variável `new_item_text` guarda o texto submetido via POST ou um string vazio em outras ocasiões. Além disso, observa-se que quando for uma requisição POST utilizamos em seguida o método `Item.objects.create()` que também cria um item e o armazena no banco sem a necessidade do `save()`. Com isso, conseguimos executar os testes com sucesso.
 
 ```text
 (superlists) auri@av:~/tdd/superlists/superlists$ python manage.py test
