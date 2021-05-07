@@ -306,3 +306,287 @@ To https://github.com/aurimrv/superlists.git
    eef7e77..6cbb32a  master -> master
 ```
 
+#### Salvando o POST no Banco de Dados
+
+Com todos os testes unitários passando, está na hora de melhorarmos os testes para garantir que um item submetido via POST seja salvo no banco de dados e, posteriormente, recuperado.
+
+Para fazer isso, podemos modificar ligeiramente o teste `test_can_save_a_POST_request`, já presente no nosso conjunto de teste em lists/tests.py, conforme abaixo. Inserimos nele as linhas de 18 a 21. O que essas linhas fazem é 1\) verificar se um novo item foi salvo no banco de dados; 2\) recuperar o primeiro elemento salvo; e 3\) verificar se o texto nesse elemento corresponde ao item submetido via POST.
+
+```text
+from django.urls import resolve
+from django.test import TestCase
+from lists.views import home_page
+
+class HomePageTest(TestCase):
+
+	def test_root_url_resolves_to_home_page_view(self):
+		found = resolve('/')
+		self.assertEquals(found.func, home_page)
+
+	def test_home_page_returns_correct_html(self):
+		response = self.client.get('/')
+		self.assertTemplateUsed(response, 'home.html')
+
+	def test_can_save_a_POST_request(self):
+		response = self.client.post('/', data={'item_text': 'A new list item'})
+
+		self.assertEquals(Item.objects.count(), 1)
+		new_item = Item.objects.first()
+		self.assertEquals(new_item.text, 'A new list item')
+
+		self.assertIn('A new list item', response.content.decode())
+		self.assertTemplateUsed(response, 'home.html')
+
+
+from lists.models import Item
+
+class ItemModelTest(TestCase):
+
+	def test_saving_and_retriving_items(self):
+		first_item = Item()
+		first_item.text = 'The first (ever) list item'
+		first_item.save()
+
+		second_item = Item()
+		second_item.text = 'Item the second'
+		second_item.save()
+
+		saved_items = Item.objects.all()
+		self.assertEquals(saved_items.count(),2)
+
+		first_saved_item = saved_items[0]
+		second_saved_item = saved_items[1]
+
+		self.assertEquals(first_saved_item.text, 'The first (ever) list item')
+		self.assertEquals(second_saved_item.text, 'Item the second')
+```
+
+Ao executar os testes unitários, o resultado agora é o exibido abaixo:
+
+```text
+(superlists) auri@av:~/tdd/superlists/superlists$ python manage.py test
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+F...
+======================================================================
+FAIL: test_can_save_a_POST_request (lists.tests.HomePageTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/auri/insync/tdd/superlists/superlists/lists/tests.py", line 18, in test_can_save_a_POST_request
+    self.assertEquals(Item.objects.count(), 1)
+AssertionError: 0 != 1
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.008s
+
+FAILED (failures=1)
+Destroying test database for alias 'default'...
+```
+
+Uma possível correção em nossa _view_ \(`lists/views.py`\) para resolver esse problema poderia ser a apresentada abaixo:
+
+```text
+from django.shortcuts import render
+from lists.models import Item
+
+# Create your views here.
+def home_page(request):
+	item = Item()
+	item.text = request.POST.get('item_text', '')
+	item.save()
+
+	return render(request, 'home.html', {
+		'new_item_text': request.POST.get('item_text', '')
+	})
+```
+
+A solução acima faz os testes unitários passarem mas está longe de ser a solução ideal. 
+
+```text
+(superlists) auri@av:~/tdd/superlists/superlists$ python manage.py test
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.009s
+
+OK
+Destroying test database for alias 'default'...
+```
+
+Por hora. podemos ainda fazer uma refatoração para eliminar uma redundância em nossa _view_ da linha 11 acima.
+
+```text
+from django.shortcuts import render
+from lists.models import Item
+
+# Create your views here.
+def home_page(request):
+	item = Item()
+	item.text = request.POST.get('item_text', '')
+	item.save()
+
+	return render(request, 'home.html', {
+		'new_item_text': item.text
+	})
+```
+
+Considerando a solução que chegamos até o momento, ela apresenta ainda tem ao menos dois problemas: 1\) estamos salvando um item vazio a cada requisição para página inicial que não seja via POST; e 2\) ainda não estamos armazenando no banco qualquer informação de quem a solicitou e, portanto, não conseguimos listar itens para pessoas distintas. Vamos anotar essas pendência para resolvê-las mais adiante.
+
+Na verdade, podemos anotar em um rascunho as pendências que detectamos, tais como:
+
+* Não salvar itens em branco a cada requisição
+* _Code smell_: teste de POST é longo demais
+* Exibir vários itens da tabela
+* Aceitar mais de uma lista
+
+> " Sempre que identificamos problemas com antecedência, há a necessidade de fazer uma avaliação para saber se devemos parar o que estamos fazendo e recomeçar ou se devemos deixá-los de lado até mais tarde. Às vezes, terminar o que estamos fazendo ainda valerá mais a pena, enquanto em outras ocasiões o problema poderá ser tão significativo que justificaria parar e repensar." \([Percival, 2017](http://www.obeythetestinggoat.com/pages/book.html)\)
+
+Podemos iniciar atacando o primeiro item da lista acima. Inicialmente, para garantir que nossa solução irá funcionar, vamos escrever um novo teste unitário para assegurar que uma chamada normal a nossa página não deveria gerar um `Item` salvo em banco de dados. Criamos então o teste `test_only_saves_items_when_necessary` conforme abaixo \(linhas 15 a 17\).
+
+```text
+from django.urls import resolve
+from django.test import TestCase
+from lists.views import home_page
+
+class HomePageTest(TestCase):
+
+	def test_root_url_resolves_to_home_page_view(self):
+		found = resolve('/')
+		self.assertEquals(found.func, home_page)
+
+	def test_home_page_returns_correct_html(self):
+		response = self.client.get('/')
+		self.assertTemplateUsed(response, 'home.html')
+
+	def test_only_saves_items_when_necessary(self):
+		self.client.get('/')
+		self.assertEquals(Item.objects.count(), 0)
+
+	def test_can_save_a_POST_request(self):
+		response = self.client.post('/', data={'item_text': 'A new list item'})
+
+		self.assertEquals(Item.objects.count(), 1)
+		new_item = Item.objects.first()
+		self.assertEquals(new_item.text, 'A new list item')
+
+		self.assertIn('A new list item', response.content.decode())
+		self.assertTemplateUsed(response, 'home.html')
+
+
+from lists.models import Item
+
+class ItemModelTest(TestCase):
+
+	def test_saving_and_retriving_items(self):
+		first_item = Item()
+		first_item.text = 'The first (ever) list item'
+		first_item.save()
+
+		second_item = Item()
+		second_item.text = 'Item the second'
+		second_item.save()
+
+		saved_items = Item.objects.all()
+		self.assertEquals(saved_items.count(),2)
+
+		first_saved_item = saved_items[0]
+		second_saved_item = saved_items[1]
+
+		self.assertEquals(first_saved_item.text, 'The first (ever) list item')
+		self.assertEquals(second_saved_item.text, 'Item the second')
+
+```
+
+Ao executar esse teste teremos uma falha esperada pois `Item.objects.count()` está retornando `1` e deveria ser `0`.
+
+```text
+(superlists) auri@av:~/tdd/superlists/superlists$ python manage.py test
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+..F..
+======================================================================
+FAIL: test_only_saves_items_when_necessary (lists.tests.HomePageTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/auri/insync/tdd/superlists/superlists/lists/tests.py", line 17, in test_only_saves_items_when_necessary
+    self.assertEquals(Item.objects.count(), 0)
+AssertionError: 1 != 0
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.011s
+
+FAILED (failures=1)
+Destroying test database for alias 'default'...
+```
+
+Vamos então corrigir nossa view para lidar com essa situação.
+
+```text
+from django.shortcuts import render
+from lists.models import Item
+
+# Create your views here.
+def home_page(request):
+	if request.method == 'POST':
+		new_item_text = request.POST['item_text']
+		Item.objects.create(text=new_item_text)
+	else:
+		new_item_text = ''
+
+	return render(request, 'home.html', {
+		'new_item_text': new_item_text
+	})
+```
+
+A solução acima trata com sucesso o nosso problema de salvar itens apenas quando a página aceitar requisões via POST. A variável `new_item_text` guarda o texto submetido via POST ou um string vazio em outras ocasiões. Além disso, obseva-se que quando for uma requisição POST utilizamos em seguida o método `Item.objects.create()` que também cria um item e o armazena no banco sem a necessidade do `save()`. Com isso, conseguimos executar os testes com sucesso.
+
+```text
+(superlists) auri@av:~/tdd/superlists/superlists$ python manage.py test
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.010s
+
+OK
+Destroying test database for alias 'default'...
+```
+
+Vamos aproveitar o momento e colocar nosso código sob controle de versão antes de continuarmos.
+
+```text
+(superlists) auri@av:~/tdd/superlists/superlists$ git status
+No ramo master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (utilize "git add <arquivo>..." para atualizar o que será submetido)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   lists/tests.py
+	modified:   lists/views.py
+
+nenhuma modificação adicionada à submissão (utilize "git add" e/ou "git commit -a")
+
+(superlists) auri@av:~/tdd/superlists/superlists$ git commit -am "Correcting view to deal with normal request and request via POST"
+[master 4a93b0f] Correcting view to deal with normal request and request via POST
+ 2 files changed, 17 insertions(+), 1 deletion(-)
+
+(superlists) auri@av:~/tdd/superlists/superlists$ git push
+Username for 'https://github.com': aurimrv
+Password for 'https://aurimrv@github.com': 
+Enumerating objects: 9, done.
+Counting objects: 100% (9/9), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (5/5), 767 bytes | 767.00 KiB/s, done.
+Total 5 (delta 3), reused 0 (delta 0)
+remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
+To https://github.com/aurimrv/superlists.git
+   6cbb32a..4a93b0f  master -> master
+```
+
+
+
+
+
