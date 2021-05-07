@@ -586,7 +586,493 @@ To https://github.com/aurimrv/superlists.git
    6cbb32a..4a93b0f  master -> master
 ```
 
+#### Redirecionando Após o POST
+
+Um dos princípios de programação Web é que é recomendado que sempre seja feito um redirecionamento após um POST. A alteração do código de nossa aplicação para atender essa demanda trará outros benefícios, tais como a eliminação da necessidade de atribuir um string vazio para o `new_item_text`, melhorando o código nesse aspecto também.
+
+Como sempre, antes de iniciarmos as alterações no código vamos redigir o teste que verifique se estamos redirecionando após um POST e retornando a página principal. Segue o código completo do arquivo `lists/tests.py` já com a alteração nas linhas 26 e 27.
+
+```text
+from django.urls import resolve
+from django.test import TestCase
+from lists.views import home_page
+
+class HomePageTest(TestCase):
+
+	def test_root_url_resolves_to_home_page_view(self):
+		found = resolve('/')
+		self.assertEquals(found.func, home_page)
+
+	def test_home_page_returns_correct_html(self):
+		response = self.client.get('/')
+		self.assertTemplateUsed(response, 'home.html')
+
+	def test_only_saves_items_when_necessary(self):
+		self.client.get('/')
+		self.assertEquals(Item.objects.count(), 0)
+
+	def test_can_save_a_POST_request(self):
+		response = self.client.post('/', data={'item_text': 'A new list item'})
+
+		self.assertEquals(Item.objects.count(), 1)
+		new_item = Item.objects.first()
+		self.assertEquals(new_item.text, 'A new list item')
+
+		self.assertEquals(response.status_code, 302)
+		self.assertEquals(response['location'], '/')
 
 
+from lists.models import Item
 
+class ItemModelTest(TestCase):
+
+	def test_saving_and_retriving_items(self):
+		first_item = Item()
+		first_item.text = 'The first (ever) list item'
+		first_item.save()
+
+		second_item = Item()
+		second_item.text = 'Item the second'
+		second_item.save()
+
+		saved_items = Item.objects.all()
+		self.assertEquals(saved_items.count(),2)
+
+		first_saved_item = saved_items[0]
+		second_saved_item = saved_items[1]
+
+		self.assertEquals(first_saved_item.text, 'The first (ever) list item')
+		self.assertEquals(second_saved_item.text, 'Item the second')
+
+```
+
+Nessas linhas estavam os asserts abaixo:
+
+```text
+		self.assertIn('A new list item', response.content.decode())
+		self.assertTemplateUsed(response, 'home.html')
+```
+
+Fizemos essa substituição pois não mais esperamos que de um `.content` renderizado contra um _template_, mas sim se um redirecionamento ocorreu. Ao executar os testes unitários modificados temos o seguinte resultado:
+
+```text
+(superlists) auri@av:~/tdd/superlists/superlists$ python manage.py test
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+F....
+======================================================================
+FAIL: test_can_save_a_POST_request (lists.tests.HomePageTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/auri/insync/tdd/superlists/superlists/lists/tests.py", line 26, in test_can_save_a_POST_request
+    self.assertEquals(response.status_code, 302)
+AssertionError: 200 != 302
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.010s
+
+FAILED (failures=1)
+Destroying test database for alias 'default'...
+```
+
+Em posse do erro, podemos agora alterar nossa aplicação para fazer esse teste passar. O código alterado do `lists/views.py` é mostrado abaixo:
+
+```text
+from django.shortcuts import redirect, render
+from lists.models import Item
+
+# Create your views here.
+def home_page(request):
+	if request.method == 'POST':
+		Item.objects.create(text=request.POST['item_text'])
+		return redirect('/')
+
+	return render(request, 'home.html')
+```
+
+E após essa alteração os testes unitários passam, conforme mostrado abaixo:
+
+```text
+(superlists) auri@av:~/tdd/superlists/superlists$ python manage.py test
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.010s
+
+OK
+Destroying test database for alias 'default'...
+```
+
+#### Melhoria nos Testes
+
+Uma boa prática em relação a casos de teste é que deveríamos tentar fazer com que cada teste se concentre em apenas um aspecto do sistema. Infelizmente, da forma como está, um único teste está com mais responsabilidades do que deveria e merece ser refatorado. O teste problemático é o `test_can_save_a_POST_request` que não apenas verifica se um POST está permitindo salvar o dado submetido, mas também está verificando se o redirecionamento esta ocorrendo adequadamente. O teste alterado abaixo separa essas duas atribuições em testes distintos, linhas de 19 a 30.
+
+```text
+from django.urls import resolve
+from django.test import TestCase
+from lists.views import home_page
+
+class HomePageTest(TestCase):
+
+	def test_root_url_resolves_to_home_page_view(self):
+		found = resolve('/')
+		self.assertEquals(found.func, home_page)
+
+	def test_home_page_returns_correct_html(self):
+		response = self.client.get('/')
+		self.assertTemplateUsed(response, 'home.html')
+
+	def test_only_saves_items_when_necessary(self):
+		self.client.get('/')
+		self.assertEquals(Item.objects.count(), 0)
+
+	def test_can_save_a_POST_request(self):
+		self.client.post('/', data={'item_text': 'A new list item'})
+
+		self.assertEquals(Item.objects.count(), 1)
+		new_item = Item.objects.first()
+		self.assertEquals(new_item.text, 'A new list item')
+
+	def test_redirects_after_POST(self):
+		response = self.client.post('/', data={'item_text': 'A new list item'})
+
+		self.assertEquals(response.status_code, 302)
+		self.assertEquals(response['location'], '/')
+
+
+from lists.models import Item
+
+class ItemModelTest(TestCase):
+
+	def test_saving_and_retriving_items(self):
+		first_item = Item()
+		first_item.text = 'The first (ever) list item'
+		first_item.save()
+
+		second_item = Item()
+		second_item.text = 'Item the second'
+		second_item.save()
+
+		saved_items = Item.objects.all()
+		self.assertEquals(saved_items.count(),2)
+
+		first_saved_item = saved_items[0]
+		second_saved_item = saved_items[1]
+
+		self.assertEquals(first_saved_item.text, 'The first (ever) list item')
+		self.assertEquals(second_saved_item.text, 'Item the second')
+
+```
+
+Para ter certeza que a refatoração do teste unitário foi bem sucedida, segue o resultado da execução dos testes:
+
+```text
+(superlists) auri@av:~/tdd/superlists/superlists$ python manage.py test
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+......
+----------------------------------------------------------------------
+Ran 6 tests in 0.011s
+
+OK
+Destroying test database for alias 'default'...
+```
+
+Com essa alteração, já cumprimos os dois primeiros itens da nossa lista de tarefas:
+
+* ~~Não salvar itens em branco a cada requisição~~
+* ~~_Code smell_: teste de POST é longo demais~~
+* Exibir vários itens da tabela
+* Aceitar mais de uma lista
+
+#### Renderizando Itens no Template
+
+O terceiro item da lista iremos cumprir nesta seção. Para isso, inicialmente vamos escrever um teste para verificar se nosso template permite a exibição de mais de um item na lista. O novo teste está entre as linhas 32 e 39 baixo.
+
+```text
+from django.urls import resolve
+from django.test import TestCase
+from lists.views import home_page
+
+class HomePageTest(TestCase):
+
+	def test_root_url_resolves_to_home_page_view(self):
+		found = resolve('/')
+		self.assertEquals(found.func, home_page)
+
+	def test_home_page_returns_correct_html(self):
+		response = self.client.get('/')
+		self.assertTemplateUsed(response, 'home.html')
+
+	def test_only_saves_items_when_necessary(self):
+		self.client.get('/')
+		self.assertEquals(Item.objects.count(), 0)
+
+	def test_can_save_a_POST_request(self):
+		self.client.post('/', data={'item_text': 'A new list item'})
+
+		self.assertEquals(Item.objects.count(), 1)
+		new_item = Item.objects.first()
+		self.assertEquals(new_item.text, 'A new list item')
+
+	def test_redirects_after_POST(self):
+		response = self.client.post('/', data={'item_text': 'A new list item'})
+
+		self.assertEquals(response.status_code, 302)
+		self.assertEquals(response['location'], '/')
+
+	def test_displays_all_list_itens(self):
+		Item.objects.create(text='itemey 1')
+		Item.objects.create(text='itemey 2')
+
+		response = self.client.get('/')
+
+		self.assertIn('itemey 1', response.content.decode())
+		self.assertIn('itemey 2', response.content.decode())
+
+
+from lists.models import Item
+
+class ItemModelTest(TestCase):
+
+	def test_saving_and_retriving_items(self):
+		first_item = Item()
+		first_item.text = 'The first (ever) list item'
+		first_item.save()
+
+		second_item = Item()
+		second_item.text = 'Item the second'
+		second_item.save()
+
+		saved_items = Item.objects.all()
+		self.assertEquals(saved_items.count(),2)
+
+		first_saved_item = saved_items[0]
+		second_saved_item = saved_items[1]
+
+		self.assertEquals(first_saved_item.text, 'The first (ever) list item')
+		self.assertEquals(second_saved_item.text, 'Item the second')
+
+```
+
+Ao executar os testes unitários temos o erro `AssertionError: 'itemey 1' not found...`, como exibido abaixo.
+
+```text
+(superlists) auri@av:~/tdd/superlists/superlists$ python manage.py test
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+.F.....
+======================================================================
+FAIL: test_displays_all_list_itens (lists.tests.HomePageTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/auri/insync/tdd/superlists/superlists/lists/tests.py", line 38, in test_displays_all_list_itens
+    self.assertIn('itemey 1', response.content.decode())
+AssertionError: 'itemey 1' not found in '<html>\n\t<head>\n\t\t<title>To-Do lists</title>\n\t</head>\n\t<body>\n\t\t<h1>Your To-Do list</h1>\n\t\t<form method="POST">\n\t\t\t<input name="item_text" id="id_new_item" placeholder="Enter a to-do item" />\n\t\t\t<input type="hidden" name="csrfmiddlewaretoken" value="0zxNgYzliBxGxsjyUWon3AsQrU9ULx8BPrjygt2YH8aAJWiyDD2ash5uE9MDjQIm">\n\t\t</form>\n\t\t<table id="id_list_table">\n\t\t\t<tr><td>1: </td></tr>\n\t\t</table>\n\t</body>\n</html>'
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.014s
+
+FAILED (failures=1)
+Destroying test database for alias 'default'...
+```
+
+Para oferecer uma solução para o _template_ permitir tal exibição faremos uso da tag `{% for .. in .. %}` \(linha 12\) que permite iterar sobre listas dentro do _template_ e o código do mesmo fica como abaixo:
+
+```text
+<html>
+	<head>
+		<title>To-Do lists</title>
+	</head>
+	<body>
+		<h1>Your To-Do list</h1>
+		<form method="POST">
+			<input name="item_text" id="id_new_item" placeholder="Enter a to-do item" />
+			{% csrf_token %}
+		</form>
+		<table id="id_list_table">
+			{% for item in items %}
+			<tr><td>1: {{ item.text }}</td></tr>
+			{% endfor %}
+		</table>
+	</body>
+</html>
+```
+
+Agora resta apenas corrigir as variáveis utilizadas na view para que as informações corretas sejam passadas para o _template_.
+
+```text
+from django.shortcuts import redirect, render
+from lists.models import Item
+
+# Create your views here.
+def home_page(request):
+	if request.method == 'POST':
+		Item.objects.create(text=request.POST['item_text'])
+		return redirect('/')
+
+	items = Item.objects.all()
+	return render(request, 'home.html', {'items': items})
+```
+
+Com isso os testes de unidade passam com sucesso:
+
+```text
+(superlists) auri@av:~/tdd/superlists/superlists$ python manage.py test
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+.......
+----------------------------------------------------------------------
+Ran 7 tests in 0.013s
+
+OK
+Destroying test database for alias 'default'...
+```
+
+Entretanto, ao executar os testes funcionais, esses ainda apresentam falha, conforme abaixo:
+
+```text
+(superlists) auri@av:~/tdd/superlists/superlists$ python functional_tests.py 
+F
+======================================================================
+FAIL: test_can_start_a_list_and_retrieve_it_later (__main__.NewVsitorTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "functional_tests.py", line 29, in test_can_start_a_list_and_retrieve_it_later
+    self.assertIn('To-Do', self.browser.title)
+AssertionError: 'To-Do' not found in 'OperationalError at /'
+
+----------------------------------------------------------------------
+Ran 1 test in 3.301s
+
+FAILED (failures=1)
+```
+
+Como podemos observar, pela descrição do problema apresentado acima está bem complicado entender o que deve ser feito para resolver o problema. Algumas vezes producar a raiz de uma falha não é uma atividade trivial. No caso acima, a solução é tentar carregar nosso site diretamente no navagador para tentar entender o que está ocorrendo.
+
+Como podemos observar na imagem abaixo, ao carregar o site http://localhost:8000, aparece a tela com uma mensagem semelhante a essa:
+
+![Mensagem de depura&#xE7;&#xE3;o do Django \(adaptado de Percival \(2017\)\)](../.gitbook/assets/erro-django.png)
+
+Observa-se que a exceção ocorreu pois o Django não é capaz de encontrar uma tabela, denominada `lists_items` no **banco de dados de produção**. Com isso podemos concluir que nos testes unitários, a classe `django.test.TestCase` do Django oferece um mecanismo para o gerenciamento de um banco de dados interno facilitando nosso vida. Entretanto, os testes funcionais, estendem a classe `unittest.TestCase` e, desse modo, não possuem essa funcionalidade embutida neles. 
+
+A solução nesse caso é criar essa tabela em um banco de dados que possa ser utilizada em produção. O Django oferece um banco de dados em memória \([SQLite](https://www.sqlite.org/index.html)\) que pode ser utilizado. A configuração do mesmo está disponível no arquivo `superlists/settings.py`. Os dados armazenados são salvos em um arquivo chamado de `db.sqlite3`, localizado no diretório base do projeto, ou seja, no mesmo diretório do arquivo `manage.py`.
+
+```text
+# Database
+# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+```
+
+Configurado o banco de dados que será utilizado, basta usarmos um outro aplicativo do Django, denominado `migrate` para gerar as tabelas exigidas por nossa aplicação.
+
+```text
+(superlists) auri@av:~/tdd/superlists/superlists$ python manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, lists, sessions
+Running migrations:
+  Applying lists.0001_initial... OK
+  Applying lists.0002_item_text... OK
+```
+
+Executado o `migrate`, a página web acessada diretamente não exibe mais as mensagens de depuração e a execução dos testes funcionais avançam.
+
+```text
+(superlists) auri@av:~/tdd/superlists/superlists$ python functional_tests.py 
+F
+======================================================================
+FAIL: test_can_start_a_list_and_retrieve_it_later (__main__.NewVsitorTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "functional_tests.py", line 67, in test_can_start_a_list_and_retrieve_it_later
+    self.check_for_row_in_list_table('2: Use peacock feathers to make a fly')
+  File "functional_tests.py", line 18, in check_for_row_in_list_table
+    self.assertIn(row_text, [row.text for row in rows])
+AssertionError: '2: Use peacock feathers to make a fly' not found in ['1: Buy peacock featers', '1: Use peacock feathers to make a fly']
+
+----------------------------------------------------------------------
+Ran 1 test in 4.300s
+
+FAILED (failures=1)
+```
+
+Aparentemente, pela mensagem de erro, o que está faltando é apenas corrigirmos a numeração dos itens de nossa lista. Podemos fazer isso alterando o nosso template conforme abaixo, utilizando a tag `{{ forloop.counter }}`:
+
+```text
+<html>
+	<head>
+		<title>To-Do lists</title>
+	</head>
+	<body>
+		<h1>Your To-Do list</h1>
+		<form method="POST">
+			<input name="item_text" id="id_new_item" placeholder="Enter a to-do item" />
+			{% csrf_token %}
+		</form>
+		<table id="id_list_table">
+			{% for item in items %}
+			<tr><td>{{ forloop.counter }}: {{ item.text }}</td></tr>
+			{% endfor %}
+		</table>
+	</body>
+</html>
+```
+
+Finalmente, ao executar os testes funcionais novamente paramos na instrução `self.fail('Finish the test!')`, encerrando assim mais uma etapa da implementação da história de usuário até esse ponto.
+
+Único inconveniente é que a cada execução novos itens aparecem na tela da nossa aplicação.
+
+```text
+1: Buy peacock featers
+2: Use peacock feathers to make a fly
+3: Buy peacock featers
+4: Use peacock feathers to make a fly
+5: Buy peacock featers
+6: Use peacock feathers to make a fly
+7: Buy peacock featers
+8: Use peacock feathers to make a fly
+```
+
+Não é a solução ideal mas, no momento, podemos apenas remover o arquivo dq.sqlite3 e recriálo com os comandos abaixo:
+
+```text
+(superlists) auri@av:~/tdd/superlists/superlists$ rm db.sqlite3 
+(superlists) auri@av:~/tdd/superlists/superlists$ python manage.py migrate --noinput
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, lists, sessions
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK
+  Applying auth.0008_alter_user_username_max_length... OK
+  Applying auth.0009_alter_user_last_name_max_length... OK
+  Applying auth.0010_alter_group_name_max_length... OK
+  Applying auth.0011_update_proxy_permissions... OK
+  Applying auth.0012_alter_user_first_name_max_length... OK
+  Applying lists.0001_initial... OK
+  Applying lists.0002_item_text... OK
+  Applying sessions.0001_initial... OK
+```
+
+Para encerrar essa parte, vamos colocar todo o código sob controle de versão:
+
+```text
+
+```
 
