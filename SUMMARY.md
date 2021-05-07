@@ -39,3 +39,8 @@
 * [4.1 Envio e Processamento de Requisição POST](4-tdd-e-banco-de-dados/4-1-envio-de-requisicao-post.md)
 * [4.2 Banco de Dados no Django](4-tdd-e-banco-de-dados/4-2-banco-de-dados-no-django.md)
 
+## 5 MELHORANDO E ORGANIZANDO OS CONJUNTOS DE TESTE
+
+* [5.1 Isolamento do Testes Funcionais](5-melhorando-e-organizando-os-conjuntos-de-teste/5-1-isolamento-do-testes-funcionais.md)
+* [5.2 Esperas Implícitas, Explícitas e Time Sleeps](5-melhorando-e-organizando-os-conjuntos-de-teste/5-2-esperas-implicitas-explicitas-e-time-sleeps.md)
+
