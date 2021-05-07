@@ -1073,6 +1073,8 @@ Running migrations:
 Para encerrar essa parte, vamos colocar todo o código sob controle de versão:
 
 ```text
-
+(superlists) auri@av:~/tdd/superlists/superlists$ git status
+(superlists) auri@av:~/tdd/superlists/superlists$ git commit -am "Redirect after POST, and show all items in template"
+(superlists) auri@av:~/tdd/superlists/superlists$ git push
 ```
 
