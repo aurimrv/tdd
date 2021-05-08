@@ -47,5 +47,6 @@
 ---
 
 * [6 ATACANDO O MAIOR DESAFIO DE FORMA INCREMANTAL](6-atacando-o-maior-desafio-de-forma-incremantal.md)
-* [6.1 Separando URL no Estilo REST](6.1-separando-url-no-estilo-rest.md)
+* [6.1 Separando URL no Estilo REST](6-1-separando-url-no-estilo-rest.md)
+* [6.2 Iterando para um Novo Design da Aplicação](6.2-iterando-para-um-novo-design-da-aplicacao.md)
 

@@ -99,7 +99,7 @@ class HomePageTest(TestCase):
 
 	def test_home_page_returns_correct_html(self):
 		response = self.client.get('/')
-		self.assertTemplateUsed(response, 'wrong.html')
+		self.assertTemplateUsed(response, 'home.html')
 
 	def test_can_save_a_POST_request(self):
 		response = self.client.post('/', data={'item_text': 'A new list item'})
@@ -108,7 +108,7 @@ class HomePageTest(TestCase):
 
 Utilizamos o método `self.client.post` no caso de teste para enviar uma requisição `POST` e passamos no argumento data as informações que desejamos que seja enviada.
 
-Ao executar o teste obtemos o resultado abaixo, indicando que o item 'A new list item' não foi encontrado \(linha 11\).
+Ao executar o teste obtemos o resultado abaixo, indicando que o item `'A new list item'` não foi encontrado \(linha 11\).
 
 ```text
 (superlists) auri@av:~/tdd/superlists/superlists$ python manage.py test
