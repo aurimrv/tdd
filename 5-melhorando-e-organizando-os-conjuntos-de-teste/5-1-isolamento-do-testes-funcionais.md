@@ -34,7 +34,7 @@ Arquivos não monitorados:
 Com essa alteração, `functional_tests.py` passou a ser `functional_tests/tests.py`. O conteúdo do novo arquivo também precisa ser alterado para fazer uso da classe `LiveServerTestCase`, conforme abaixo.
 
 ```text
-from django.test import LiveServerTesteCase
+from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
