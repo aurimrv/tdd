@@ -39,7 +39,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
 
-class NewVsitorTest(unittest.TestCase):
+class NewVsitorTest(LiveServerTestCase):
 
 	def setUp(self):
 		self.browser = webdriver.Firefox()
