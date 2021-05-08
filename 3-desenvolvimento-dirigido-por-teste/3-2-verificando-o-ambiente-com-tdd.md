@@ -12,7 +12,7 @@ from selenium import webdriver
 browser = webdriver.Firefox()
 browser.get("http://localhost:8000")
 
-assert 'Django' in browser.title
+assert 'worked successfully' in browser.title
 ```
 
 Esse teste deve ser salvo num arquivo `functional_tests.py` dentro da pasta `$HOME/tdd/superlists`. 
