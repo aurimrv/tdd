@@ -100,7 +100,27 @@ class NewVsitorTest(LiveServerTestCase):
 		# Satisfeita, ela volta a dormir
 ```
 
+Se desejarmos, para ter certeza de que os testes estão funcionando, podemos incluir algumas falhas propositais no mesmo e verificar os resultados. Por hora, podemos confirmar as alterações já que os resultados dos testes funcionais param no `self.fail`.
 
+```text
+(superlists) auri@av:~/insync/tdd/superlists/superlists$ python manage.py test functional_tests
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+F
+======================================================================
+FAIL: test_can_start_a_list_and_retrieve_it_later (functional_tests.tests.NewVsitorTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/auri/insync/tdd/superlists/superlists/functional_tests/tests.py", line 85, in test_can_start_a_list_and_retrieve_it_later
+    self.fail('Finish the test!')
+AssertionError: Finish the test!
+
+----------------------------------------------------------------------
+Ran 1 test in 4.667s
+
+FAILED (failures=1)
+Destroying test database for alias 'default'...
+```
 
 
 
