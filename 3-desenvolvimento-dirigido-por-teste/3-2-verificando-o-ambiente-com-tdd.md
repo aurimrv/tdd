@@ -45,7 +45,6 @@ Para fazermos o teste passar é necessário colocarmos uma instância do `django
 
 ```text
 (superlists) auri@av:~/tdd/superlists$ django-admin startproject superlists
-(superlists) auri@av:~/tdd/superlists$ 
 ```
 
 Em caso de sucesso, o comando não emite qualquer saída, mas irá criar um subdiretório `superlists` abaixo do diretório corrente. Parte da estrutura de diretórios do ambiente virtual com o projeto do `django` fica conforme apresentado na figura abaixo:
