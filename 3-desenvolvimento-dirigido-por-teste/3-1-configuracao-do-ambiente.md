@@ -1,6 +1,6 @@
 # 3.1 Configuração do Ambiente
 
-Considerando a aplicação que será resenvolvida, ela fará uso do framework django e para realizarmos o TDD, também precisaremos do Selenium. Segue abaixo a instrução para a instalação de ambos.Após a instalação das ferramentas básicas, conforme apresentado na [Seção 1.2](../1-introducao/1-2-configuracao-inicial-do-ambiente.md), a seguir são apresentadas as demais configurações para dar início ao desenvolvimento da aplicação exemplo com TDD. 
+Considerando a aplicação que será desenvolvida, ela fará uso do framework django e para realizarmos o TDD, também precisaremos do Selenium. Segue abaixo a instrução para a instalação de ambos.Após a instalação das ferramentas básicas, conforme apresentado na [Seção 1.2](../1-introducao/1-2-configuracao-inicial-do-ambiente.md), a seguir são apresentadas as demais configurações para dar início ao desenvolvimento da aplicação exemplo com TDD. 
 
 O primeiro passo é verificarmos as versões das ferramentas já instaladas. Os comandos a seguir permitem fazer tal verificação.
 

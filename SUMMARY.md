@@ -41,6 +41,6 @@
 
 ## 5 MELHORANDO E ORGANIZANDO OS CONJUNTOS DE TESTE
 
-* [5.1 Isolamento do Testes Funcionais](5-melhorando-e-organizando-os-conjuntos-de-teste/5-1-isolamento-do-testes-funcionais.md)
+* [5.1 Isolamento dos Testes Funcionais](5-melhorando-e-organizando-os-conjuntos-de-teste/5-1-isolamento-do-testes-funcionais.md)
 * [5.2 Esperas Implícitas, Explícitas e Time Sleeps](5-melhorando-e-organizando-os-conjuntos-de-teste/5-2-esperas-implicitas-explicitas-e-time-sleeps.md)
 
