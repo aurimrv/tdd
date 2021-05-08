@@ -44,3 +44,8 @@
 * [5.1 Isolamento dos Testes Funcionais](5-melhorando-e-organizando-os-conjuntos-de-teste/5-1-isolamento-do-testes-funcionais.md)
 * [5.2 Esperas Implícitas, Explícitas e Time Sleeps](5-melhorando-e-organizando-os-conjuntos-de-teste/5-2-esperas-implicitas-explicitas-e-time-sleeps.md)
 
+---
+
+* [6 ATACANDO O MAIOR DESAFIO DE FORMA INCREMANTAL](6-atacando-o-maior-desafio-de-forma-incremantal.md)
+* [6.1 Separando URL no Estilo REST](6.1-separando-url-no-estilo-rest.md)
+

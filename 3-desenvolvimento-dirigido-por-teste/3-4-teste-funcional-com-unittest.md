@@ -27,7 +27,7 @@ assert 'To-Do' in browser.title
 
 # Ela é convidada a inserir um item de tarefa imediatamente
 
-# Ela digita "Buy peacock featers" (Comprar penas de pavão)
+# Ela digita "Buy peacock feathers" (Comprar penas de pavão)
 # em uma nova caixa de texto (o hobby de Edith é fazer iscas
 # para pesca com fly)
 
@@ -162,7 +162,7 @@ class NewVsitorTest(unittest.TestCase):
 
 		# Ela é convidada a inserir um item de tarefa imediatamente
 
-		# Ela digita "Buy peacock featers" (Comprar penas de pavão)
+		# Ela digita "Buy peacock feathers" (Comprar penas de pavão)
 		# em uma nova caixa de texto (o hobby de Edith é fazer iscas
 		# para pesca com fly)
 

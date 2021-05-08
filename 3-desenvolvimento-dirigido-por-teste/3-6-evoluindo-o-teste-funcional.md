@@ -45,11 +45,11 @@ class NewVsitorTest(unittest.TestCase):
 			'Enter a to-do item'
 		)
 
-		# Ela digita "Buy peacock featers" (Comprar penas de pavão)
+		# Ela digita "Buy peacock feathers" (Comprar penas de pavão)
 		# em uma nova caixa de texto (o hobby de Edith é fazer iscas
 		# para pesca com fly)
 
-		inputbox.send_keys('Buy peacock featers')
+		inputbox.send_keys('Buy peacock feathers')
 
 
 		# Quando ela tecla enter, a página é atualizada, e agora
@@ -62,7 +62,7 @@ class NewVsitorTest(unittest.TestCase):
 		table = self.browser.find_element_by_id('id_list_table')
 		rows = table.find_elements_by_tag_name('tr')
 		self.assertTrue(
-			any(row.text == '1: Buy peacock featers' for row in rows)
+			any(row.text == '1: Buy peacock feathers' for row in rows)
 		)
 
 		# Ainda continua havendo uma caixa de texto convidando-a a 
@@ -566,7 +566,7 @@ Da forma como o `assertTrue` está a mensagem de erro gerada não é muito signi
 
 ```text
 		self.assertTrue(
-			any(row.text == '1: Buy peacock featers' for row in rows),
+			any(row.text == '1: Buy peacock feathers' for row in rows),
 			"New to-do item not appear in table"
 		)
 ```
