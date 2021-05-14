@@ -8,7 +8,7 @@ O exemplo empregado neste livro foi extraído de [Percival \(2017\)](https://nov
 
 Inicialmente, faremos a instalação do Python, seu instalador de pacotes \(pip\) e o `virtualenv`, responsável pro criar um ambiente de execução de programas Python que pode ser personalizável a cada projeto, sem prejudicar a configuração global do sistema. Para isso, basta executar a sequência de comandos abaixo em um terminal Linux. No exemplo, é utilizado o [Linux Mint 20.1](https://www.linuxmint.com/download.php).
 
-```text
+```bash
 sudo apt install python3
 sudo apt install build-essential checkinstall
 sudo apt install libreadline-gplv2-dev libncursesw5-dev libssl-dev \ 
@@ -24,7 +24,7 @@ pip3 install virtualenvwrapper
 
 Após a instalação, para realizar o teste, basta consultar as versões dos programas instalados, como ilustrado abaixo:
 
-```text
+```bash
 $ python --version
 Python 3.8.5
 $ pip3 --version
@@ -37,7 +37,7 @@ git version 2.25.1
 
 Finalmente, para completar a instalação do ambiente, as seguintes variáveis de ambiente devem ser incluídas no final do arquivo `.bashrc`, localizado na raiz da área do usuário Linux.
 
-```text
+```bash
 export PATH=$HOME/.local/bin:$PATH
 export WORKON_HOME="$HOME/tdd"
 ```

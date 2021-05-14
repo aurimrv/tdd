@@ -8,14 +8,14 @@ O framework unittest oferece métodos que nos permitem executar ações antes ou
 
 Testes derivados de `LiveServerTestCase`  esperam ser executadas pelo executor de testes do Django e, para isso precisamos reorganizar os arquivos contendo os testes para indicar ao Djando qual desejamos executar em dado momento. Desse modo, vamos criar uma pasta para acomodar nossos testes funcionais um nível abaixo de nosso diretório de trabalho. Tudo que o Django necessita é uma pasta com um arquivo **`__init__.py`**dentro dela.
 
-```text
+```bash
 (superlists) auri@av:~/tdd/superlists/superlists$ mkdir functional_tests
 (superlists) auri@av:~/tdd/superlists/superlists$ touch functional_tests/__init__.py
 ```
 
 Em seguida, como nosso código está sob controle de versão, podemos utilizar os comandos do Git para movimentação de arquivos conforme abaixo:
 
-```text
+```bash
 (superlists) auri@av:~/tdd/superlists/superlists$ git mv functional_tests.py functional_tests/tests.py
 
 (superlists) auri@av:~/tdd/superlists/superlists$ git status
@@ -33,7 +33,7 @@ Arquivos não monitorados:
 
 Com essa alteração, `functional_tests.py` passou a ser `functional_tests/tests.py`. O conteúdo do novo arquivo também precisa ser alterado para fazer uso da classe `LiveServerTestCase`, conforme abaixo.
 
-```text
+```python
 from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -115,14 +115,14 @@ class NewVsitorTest(LiveServerTestCase):
 
 Basicamente, incluímos a dependência de LiveServerTestCase \(linha 1\), modificamos a URL utilizada na linha 24 de `self.browser.get(http://localhost:8000/)` para `self.browser.get(self.live_server_url)`, que identifica corretamente a URL e a porta relacionada com o servidor de teste. Além disso, as linhas de código abaixo podem ser removidas do servidor de teste pois a execução dos mesmos se dará via `manage.py`.
 
-```text
+```python
 if __name__ == '__main__':
 	unittest.main()
 ```
 
 Com essas alterações, a execução dos testes funcionais passa a ser realizadas agora da seguinte forma:
 
-```text
+```bash
 (superlists) auri@av:~/tdd/superlists/superlists$ python manage.py test functional_tests
 Creating test database for alias 'default'...
 System check identified no issues (0 silenced).
@@ -146,7 +146,7 @@ Observe que agora, ao executa os testes, o Django cria uma base auxiliar apenas 
 
 Antes de continuarmos, vamos colocar nosso código e suas alterações no controle de verão:
 
-```text
+```bash
 (superlists) auri@av:~/tdd/superlists/superlists$ git status 
 No ramo master
 Your branch is up to date with 'origin/master'.

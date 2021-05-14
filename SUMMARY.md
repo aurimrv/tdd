@@ -44,9 +44,11 @@
 * [5.1 Isolamento dos Testes Funcionais](5-melhorando-e-organizando-os-conjuntos-de-teste/5-1-isolamento-do-testes-funcionais.md)
 * [5.2 Esperas Implícitas, Explícitas e Time Sleeps](5-melhorando-e-organizando-os-conjuntos-de-teste/5-2-esperas-implicitas-explicitas-e-time-sleeps.md)
 
----
+## 6 ATACANDO O MAIOR DESAFIO DE FORMA INCREMANTAL <a id="6-atacando-o-maior-desafio-de-forma-incremantal-1"></a>
 
-* [6 ATACANDO O MAIOR DESAFIO DE FORMA INCREMANTAL](6-atacando-o-maior-desafio-de-forma-incremantal.md)
-* [6.1 Separando URL no Estilo REST](6-1-separando-url-no-estilo-rest.md)
-* [6.2 Iterando para um Novo Design da Aplicação](6.2-iterando-para-um-novo-design-da-aplicacao.md)
+* [6.1 Separando URL no Estilo REST](6-atacando-o-maior-desafio-de-forma-incremantal-1/6-1-separando-url-no-estilo-rest.md)
+* [6.2 Iterando para um Novo Design da Aplicação](6-atacando-o-maior-desafio-de-forma-incremantal-1/6.2-iterando-para-um-novo-design-da-aplicacao.md)
+* [6.3 Refatorar Casos de Teste](6-atacando-o-maior-desafio-de-forma-incremantal-1/6-3-refatorar-casos-de-teste.md)
+* [6.4 Separando Templates](6-atacando-o-maior-desafio-de-forma-incremantal-1/6-4-separando-templates.md)
+* [6.5 URL para Nova Lista](6-atacando-o-maior-desafio-de-forma-incremantal-1/6-5-url-para-nova-lista.md)
 

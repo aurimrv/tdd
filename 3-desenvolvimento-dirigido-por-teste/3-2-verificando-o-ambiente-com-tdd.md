@@ -6,7 +6,7 @@ A ideia geral é de que nada seja feito sem que exista um teste para verificar o
 
 Para isso, podemos escrever um teste conforme apresentado abaixo:
 
-```text
+```python
 from selenium import webdriver
 
 browser = webdriver.Firefox()
@@ -19,7 +19,7 @@ Esse teste deve ser salvo num arquivo `functional_tests.py` dentro da pasta `$HO
 
 Feito isso, é possível executar o teste com o comando abaixo:
 
-```text
+```bash
 (superlists) auri@av:~/tdd/superlists$ python functional_tests.py 
 Traceback (most recent call last):
   File "functional_tests.py", line 4, in <module>
@@ -43,7 +43,7 @@ Como era de se esperar, o teste falhou, exatamente por não conseguir encontrar 
 
 Para fazermos o teste passar é necessário colocarmos uma instância do `django` em execução. Para isso, o primeiro passo é a criação de um **projeto** que será o contêiner principal de nosso site. A criação de um projeto em `django` pode ser feita com a ferramenta `django-admin`. O comando abaixo, executado dentro da pasta `superlists` do nosso ambiente virtual, irá criar esse projeto para nós.
 
-```text
+```bash
 (superlists) auri@av:~/tdd/superlists$ django-admin startproject superlists
 ```
 
@@ -97,7 +97,7 @@ Em caso de sucesso, o comando não emite qualquer saída, mas irá criar um subd
 
 Para inicializar o servidor `django`, basta executar o comando abaixo dentro do ambiente virtual.
 
-```text
+```bash
 (superlists) auri@av:~/tdd/superlists$ cd superlists/
 (superlists) auri@av:~/tdd/superlists/superlists$ python manage.py runserver
 Watching for file changes with StatReloader
@@ -115,8 +115,8 @@ Quit the server with CONTROL-C
 
 No exemplo acima, o `django` alerta que é necessário executar um comando para fazer a migração do projeto. Para isso, pressionamos `CONTROL-C` para interromper a execução do servidor e, em seguida, executamos o comando indicado acima.
 
-```text
-^C(superlists) auri@av:~/tdd/superlists/superlists$ python manage.py migrate
+```bash
+(superlists) auri@av:~/tdd/superlists/superlists$ python manage.py migrate
 Operations to perform:
   Apply all migrations: admin, auth, contenttypes, sessions
 Running migrations:
@@ -143,7 +143,7 @@ Running migrations:
 
 Feito isso é possível iniciar novamente o servidor e agora sem qualquer mensagem de aviso.
 
-```text
+```bash
 (superlists) auri@av:~/tdd/superlists/superlists$ python manage.py runserver
 Watching for file changes with StatReloader
 Performing system checks...
@@ -158,7 +158,7 @@ Quit the server with CONTROL-C.
 
 Agora com o servidor no ar é possível reexecutar o teste para verificar se o mesmo passa. Para isso, basta abrir um novo terminal, se conectar ao ambiente virtual, entrar no diretório `superlists` \(primeiro nível\) e executar o comando para a execução, conforme abaixo:
 
-```text
+```bash
 auri@av:~$ workon superlists
 (superlists) auri@av:~$ cd tdd/superlists
 (superlists) auri@av:~/tdd/superlists$ python functional_tests.py 

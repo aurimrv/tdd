@@ -4,7 +4,7 @@ Considerando a aplicação que será desenvolvida, ela fará uso do framework Dj
 
 O primeiro passo é verificarmos as versões das ferramentas já instaladas. Os comandos a seguir permitem fazer tal verificação.
 
-```text
+```bash
 $ python --version
 Python 3.8.5
 $ pip3 --version
@@ -17,7 +17,7 @@ Com essas ferramentas instaladas e as variáveis de ambiente definidas, é poss�
 
 O primeiro passo para isso é instalar as ferramentas abaixo:
 
-```text
+```bash
 pip3 install testresources
 pip3 install virtualenv
 pip3 install --user virtualenvwrapper
@@ -29,7 +29,7 @@ Finalizada a instalação das ferramentas, é necessário incluir mais algumas l
 
 Finalmente, para completar a instalação do ambiente, as seguintes variáveis de ambiente devem ser incluídas no final do arquivo `.bashrc`, localizado na raiz da área do usuário Linux. Observa-se que as linhas 1 e 2 abaixo já devem estar presentes no seu arquivo de configuração se você seguiu os passos da [Seção 1.2](../1-introducao/1-2-configuracao-inicial-do-ambiente.md).
 
-```text
+```bash
 export PATH=$HOME/.local/bin:$PATH
 export WORKON_HOME="$HOME/tdd"
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
@@ -42,7 +42,7 @@ Basicamente, essas variáveis definem configurações necessárias para a execu�
 
 O primeiro passo para dar início ao desenvolvimento da nossa aplicação é a criação do ambiente virtual. Para isso, vamos executar os comandos abaixo:
 
-```text
+```bash
 $ cd $HOME/tdd
 $ mkvirtualenv superlists
 Using base prefix '/usr'
@@ -90,7 +90,7 @@ superlists
 
 Os comandos a seguir mostram como desativar e ativar o `virtualenv`. Ou seja, estando no ambiente virtual, basta usar o comando `deactivate` que você deixa o ambiente. Se necessitar retornar, basta executar o comando `workon superlists`.
 
-```text
+```bash
 (superlists) $ deactivate 
 $ workon superlists
 (superlists) $ 
@@ -100,7 +100,7 @@ $ workon superlists
 
 O [django](https://www.djangoproject.com/) é um framework para construção de sistemas Web em Python e o [Selenium](https://selenium-python.readthedocs.io/) é uma ferramenta de captura e reprodução que permite a execução de testes automatizados via navegador Web. Para instalar ambas as ferramentas e utilizá-las em nossos projetos, basta executar o comando abaixo:
 
-```text
+```bash
 (superlists) auri@av:~/tdd$ pip3 install "django<=3.2" "selenium<4"
 Collecting django<=3.2
   Using cached Django-3.2-py3-none-any.whl (7.9 MB)
@@ -123,7 +123,7 @@ O Selenium permite a execução dos testes em vários navegadores mas, para cada
 
 Primeiro é necessário fazer o download dos arquivos compactados com os drivers acima e, em seguida, a instalação de ambos os drivers é feita simplesmente descompactando o conteúdo dos arquivos dentro da pasta `$HOME/.local/bin`, conforme apresentado a seguir:
 
-```text
+```bash
 $ cd $HOME/.local/bin
 $ wget https://github.com/mozilla/geckodriver/releases/download/v0.29.1/geckodriver-v0.29.1-linux64.tar.gz
 $ tar zxvf geckodriver-v0.29.1-linux64.tar.gz 
@@ -136,7 +136,7 @@ $ rm geckodriver-v0.29.1-linux64.tar.gz chromedriver_linux64.zip
 
 Feita as instalações, é possível conferir as versões dos drivers com os comandos abaixo:
 
-```text
+```bash
 $ ./geckodriver --version
 geckodriver 0.29.1 (970ef713fe58 2021-04-08 23:34 +0200)
 
@@ -147,7 +147,7 @@ This program is subject to the terms of the Mozilla Public License 2.0.
 You can obtain a copy of the license at https://mozilla.org/MPL/2.0/.
 ```
 
-```text
+```bash
 ./chromedriver --version
 ChromeDriver 90.0.4430.24 (4c6d850f087da467d926e8eddb76550aed655991-refs/branch-heads/4430@{#429})
 ```

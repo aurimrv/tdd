@@ -8,7 +8,7 @@ O Selenium oferece várias outras formas de esperam, tanto explícitas quanto im
 
 No nosso caso, vamos implementar nosso próprio mecanismo de espera e, para isso, vamos reimplementar o método `check_for_row_in_list_table` e renomeá-lo para `wait_for_row_in_list_table` \(linhas 18 a 29\) e a implementação fica conforme abaixo:
 
-```text
+```python
 from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
@@ -102,7 +102,7 @@ class NewVsitorTest(LiveServerTestCase):
 
 Se desejarmos, para ter certeza de que os testes estão funcionando, podemos incluir algumas falhas propositais no mesmo e verificar os resultados. Por hora, podemos confirmar as alterações já que os resultados dos testes funcionais param no `self.fail`.
 
-```text
+```bash
 (superlists) auri@av:~/insync/tdd/superlists/superlists$ python manage.py test functional_tests
 Creating test database for alias 'default'...
 System check identified no issues (0 silenced).

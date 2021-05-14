@@ -22,7 +22,7 @@ Independentemente de qual técnica determinado critério pertence, o papel de to
 
 Neste texto será dado ênfase à técnica de teste funcional e alguns de seus critérios. Para ilustrar a aplicação dos critérios de teste será utilizada a especificação de um programa simples, parte de um compilador, denominado `Identifier`. A especificação do referido programa é dada abaixo:
 
-```text
+```python
 ###############################################################################
 # Especificação Identifier.py
 # ---------------------------

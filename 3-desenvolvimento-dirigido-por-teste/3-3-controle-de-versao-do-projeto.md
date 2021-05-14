@@ -12,7 +12,7 @@ Para que o Git possa controlar as alterações feitas em nossos arquivo é neces
 
 Entretanto, primeiramente vamos mover nosso arquivo de teste \(`functional_tests.py`\) para essa pasta. Atualmente ele está localizado um nível abaixo, em `$WORKON_HOME/superlists`. Em seguida, basta entrar na pasta que sera utilizada como nosso diretório de trabalho, e a qual desejamos colocar sobre controle de versão, para inicializar nosso repositório com o comando `git init`.
 
-```text
+```bash
 (superlists) auri@av:~/tdd/superlists$ pwd
 /home/auri/tdd/superlists
 (superlists) auri@av:~/tdd/superlists$ mv functional_tests.py superlists/
@@ -24,7 +24,7 @@ Initialized empty Git repository in /home/auri/insync/tdd/superlists/superlists/
 
 O próximo passo é decidirmos o que iremos colocar sobre controle de versão. O conteúdo atual da pasta é esse:
 
-```text
+```bash
 (superlists) auri@av:~/tdd/superlists/superlists$ ls
 db.sqlite3  functional_tests.py  manage.py  superlists
 ```
@@ -33,7 +33,7 @@ db.sqlite3  functional_tests.py  manage.py  superlists
 
 `db.sqlite3` é um arquivo de banco de dados e não queremos que ele seja mantido sobre controle de versão. Também vimos anteriormente o arquivo `geckodriver.log` , que é um arquivo de log de execução do Selenium, e também podemos descartar esse arquivo do controle de versão. Para fazer isso no Git, basta criarmos na raiz do repositório, um arquivo denominado especial denominado `.gitignore`. O seu conteúdo indica ao Git o que deve ser ignorado do controle de versão. Os comandos abaixo foram utilizados para a criação do arquivo `.gitignore`. Você também pode utilizar um editor de texto qualquer para essa mesma finalidade. 
 
-```text
+```bash
 (superlists) auri@av:~/tdd/superlists/superlists$ echo "db.sqlite3" >> .gitignore
 (superlists) auri@av:~/tdd/superlists/superlists$ echo "geckodriver.log" >> .gitignore
 (superlists) auri@av:~/tdd/superlists/superlists$ cat .gitignore 
@@ -45,7 +45,7 @@ geckodriver.log
 
 Decidido o que ignorar, os demais arquivos, em princípio, podem ser adicionados ao controle de versão. Para isso, usamos o comando `git add`, conforme abaixo. Para consultar o que foi adicionado ao controle de versão, basta usar o comando `git status`.
 
-```text
+```bash
 (superlists) auri@av:~/tdd/superlists/superlists$ git add .
 (superlists) auri@av:~/tdd/superlists/superlists$ git status
 No ramo master
@@ -70,7 +70,7 @@ Mudanças a serem submetidas:
 
 Como podemos observar, além dos arquivos `.gitignore`, `functional_tests.py` e `manage.py`, todos os arquivos do subdiretório `superlists` também foram incluídos mas, alguns deles não desejamos colocar sobre controle de versão, como é o caso dos arquivos da pasta `__pycache__`. Para isso, basta pedirmos ao Git que remova tais arquivos do controle de versão e adicionarmos os mesmos no arquivo `.gitignore`, conforme mostrado abaixo.
 
-```text
+```bash
 (superlists) auri@av:~/tdd/superlists/superlists$ git rm -r --cached superlists/__pycache__
 rm 'superlists/__pycache__/__init__.cpython-38.pyc'
 rm 'superlists/__pycache__/settings.cpython-38.pyc'
@@ -82,7 +82,7 @@ rm 'superlists/__pycache__/wsgi.cpython-38.pyc'
 
 Verificando o status de nosso repositório tudo parece ok, exceto que como modificamos o arquivo `.gitignore`, ele precisa ser adicionado novamente ao repositório \(linha 22\) e, em seguida, as modificações precisam ser confirmadas com o comando `git commit` \(linha 23\).
 
-```text
+```bash
 (superlists) auri@av:~/tdd/superlists/superlists$ git status
 No ramo master
 
@@ -169,7 +169,7 @@ O primeiro passo \(linha 1\) é adicionar os dados do repositório remoto à ori
 
 Ao executar esse comando, o Git irá solicitar nosso login \(`aurimrv` no exemplo\) e a senha que deve ser o _token_ criado anteriormente. 
 
-```text
+```bash
 (superlists) auri@av:~/tdd/superlists/superlists$ git remote add origin https://github.com/aurimrv/superlists.git
 (superlists) auri@av:~/tdd/superlists/superlists$ git push -u origin master
 Username for 'https://github.com': aurimrv
@@ -209,7 +209,7 @@ A tela a seguir agora exibe a descrição do projeto na tela inicial do reposit�
 
 Uma vez que criamos o arquivo `README.md` remotamente, ele não está presente no nosso diretório local. Para atualizar nossa cópia local podemos utilizar os comandos das linhas 1, 4 e 12 abaixo e manter tudo sincronizado.
 
-```text
+```bash
 (superlists) auri@av:~/tdd/superlists/superlists$ git checkout master
 Already on 'master'
 Your branch is up to date with 'origin/master'.
@@ -229,7 +229,7 @@ Fast-forwarded master to origin/master.
 
 A execução do `git status` conforma que os repositórios estão sincronizados e o arquivo README.md já está presente no repositório local.
 
-```text
+```bash
 (superlists) auri@av:~/tdd/superlists/superlists$ git status
 No ramo master
 Your branch is up to date with 'origin/master'.
