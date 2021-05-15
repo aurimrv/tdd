@@ -1,12 +1,12 @@
 # 6.4 Separando Templates
 
-Pretendemos que a view da página inicial e da lista sejam páginas bem distintas, portanto, merecem que sejam renderizadas por diferentes templates.
+Pretendemos que a _view_ da página inicial e da lista sejam páginas bem distintas, portanto, merecem que sejam renderizadas por diferentes _templates_.
 
-Na página principal, a intenção é que tenhamos uma página com um campo para a entrada de itens para uma nova lista. Já a página que exive a lista deve apresentar todos os itens disponíveis, já cadastrados.
+Na página principal, a intenção é que tenhamos uma página com um campo para a entrada de itens para uma nova lista. Já a página que exige a lista deve apresentar todos os itens disponíveis, já cadastrados.
 
-Para iniciarmos essa separação dos templates, vamos, primeiro, criar um teste para guiar nossa implementação.
+Para iniciarmos essa separação dos _templates_, vamos, primeiro, criar um teste para guiar nossa implementação.
 
-A nossa classe de teste ListViewTest ganhará o teste `test_uses_list_template`, conforme apresentado abaixo entre as linhas 36 a 38.
+A nossa classe de teste `ListViewTest` ganhará o teste `test_uses_list_template`, conforme apresentado abaixo entre as linhas 36 a 38.
 
 ```python
 from django.urls import resolve
@@ -79,7 +79,7 @@ class ItemModelTest(TestCase):
 		self.assertEquals(second_saved_item.text, 'Item the second')
 ```
 
-Ao executar os testes temos a mensagem de erro abaixo:
+Ao executar os testes, temos a mensagem de erro abaixo:
 
 ```python
 (superlists) auri@av:~/tdd/superlists/superlists$ python manage.py test lists
@@ -104,7 +104,7 @@ FAILED (failures=1)
 Destroying test database for alias 'default'...
 ```
 
-Assim sendo, vamos ditar nossa view para dar início a solução desse erro. Inicialmente vamos editar o arquivo `lists/views.py` para que fique conforme abaixo. Na linha 15, `'home.html'` foi substituído por `'list.html'`.
+Assim sendo, vamos ditar nossa _view_ para dar início a solução desse erro. Inicialmente vamos editar o arquivo `lists/views.py` para ficar conforme abaixo. Na linha 15, `'home.html'` foi substituído por `'list.html'`.
 
 ```python
 from django.shortcuts import redirect, render
@@ -156,7 +156,7 @@ FAILED (errors=2)
 Destroying test database for alias 'default'...
 ```
 
-O próximo passo é criarmos o template `list.html`. Como sempre, faremos sempre pelo menor esforço. O comando abaixo cria um arquivo vazio.
+O próximo passo é criarmos o _template_ `list.html`. Como sempre, faremos sempre pelo menor esforço. O comando abaixo cria um arquivo vazio.
 
 ```bash
 (superlists) auri@av:~/tdd/superlists/superlists$ touch lists/templates/list.html
@@ -186,7 +186,7 @@ FAILED (failures=1)
 Destroying test database for alias 'default'...
 ```
 
-Vamos então criar um template mais elaborado. Como muito do que precisamos está em home.html, vamos compiar o conteúdo de `home.html` para `list.html` e, em seguida, alterar o `home.html` para manter apenas o que é necessário.
+Vamos então criar um _template_ mais elaborado. Como muito do que precisamos está em home.html, vamos copiar o conteúdo de `home.html` para `list.html` e, em seguida, alterar o `home.html` para manter apenas o que é necessário.
 
 ```bash
 (superlists) auri@av:~/tdd/superlists/superlists$ cp lists/templates/home.html lists/templates/list.html 
@@ -223,7 +223,7 @@ OK
 Destroying test database for alias 'default'...
 ```
 
-Na nossa implementação, não há mais a necessidade de passar todos os itens para o template home.html e, desse modo, podemos simplificar a função da view para se adequar a isso. A nova função `home_page` - linhas 5 a 10 de `lists/views.py` - fica conforme abaixo:
+Na nossa implementação, não há mais a necessidade de passar todos os itens para o _template_ home.html e, desse modo, podemos simplificar a função da _view_ para se adequar a isso. A nova função `home_page` - linhas 5 a 10 de `lists/views.py` - fica conforme abaixo:
 
 ```python
 from django.shortcuts import redirect, render

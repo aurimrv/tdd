@@ -1,10 +1,10 @@
 # 5.1 Isolamento dos Testes Funcionais
 
-Ao encerrarmos o capítulo anterior, nossa aplicação apresentava um pequeno problema que era o acúmulo de itens na lista em execuções sucessivas dos casos de teste. Um outro inconveniente que temos em nosso código de testes são os time.sleeps. Durante este capítulo iremos deixar um pouco de lado no desenvolvimento do código da aplicação em si para nos concentrarmos na melhoria do nosso conjunto de teste funcional.
+Ao encerrarmos o capítulo anterior, nossa aplicação apresentava um pequeno problema que era o acúmulo de itens na lista em execuções sucessivas dos casos de teste. Outro inconveniente que temos em nosso código de testes são os `time.sleeps`. Durante este capítulo iremos deixar um pouco de lado no desenvolvimento do código da aplicação para nos concentrarmos na melhoria do nosso conjunto de teste funcional.
 
 Nesta seção abordaremos o isolamento dos testes e como eliminar as repetições de inclusão de itens na lista durante execuções sucessivas dos testes. Na Seção 5.2 lidaremos com a questão de sincronização.
 
-O framework unittest oferece métodos que nos permitem executar ações antes ou após cada caso de teste, são os métodos `setUp` e `tearDown`, respectivamente. Poderíamos utilizá-los para fazer, antes de cada teste, colocar o sistema em um estado conhecido válido e, posteriormente, limpar os dados produzidos durante a execução de um teste. Entretanto, o Django oferece uma classe de teste, denominada `LiveServerTestCase` que nos proporciona recursos semelhantes aqueles utilizados nos testes unitários, ou seja, do isolamento dos testes em execuções sucessivas. Essa classe é responsável por criar, automaticamente, um banco de dados de teste.
+O framework `unittest` oferece métodos que nos permitem executar ações antes ou após cada caso de teste, são os métodos `setUp` e `tearDown`, respectivamente. Poderíamos utilizá-los para fazer, antes de cada teste, colocar o sistema em um estado conhecido válido e, posteriormente, limpar os dados produzidos durante a execução de um teste. Entretanto, o Django oferece uma classe de teste, denominada `LiveServerTestCase` que nos proporciona recursos semelhantes aqueles utilizados nos testes unitários, ou seja, do isolamento dos testes em execuções sucessivas. Essa classe é responsável por criar, automaticamente, um banco de dados de teste.
 
 Testes derivados de `LiveServerTestCase`  esperam ser executadas pelo executor de testes do Django e, para isso precisamos reorganizar os arquivos contendo os testes para indicar ao Djando qual desejamos executar em dado momento. Desse modo, vamos criar uma pasta para acomodar nossos testes funcionais um nível abaixo de nosso diretório de trabalho. Tudo que o Django necessita é uma pasta com um arquivo **`__init__.py`**dentro dela.
 
@@ -113,7 +113,7 @@ class NewVsitorTest(LiveServerTestCase):
 		# Satisfeita, ela volta a dormir
 ```
 
-Basicamente, incluímos a dependência de LiveServerTestCase \(linha 1\), modificamos a URL utilizada na linha 24 de `self.browser.get(http://localhost:8000/)` para `self.browser.get(self.live_server_url)`, que identifica corretamente a URL e a porta relacionada com o servidor de teste. Além disso, as linhas de código abaixo podem ser removidas do servidor de teste pois a execução dos mesmos se dará via `manage.py`.
+Basicamente, incluímos a dependência de `LiveServerTestCase` \(linha 1\), modificamos a URL utilizada na linha 24 de `self.browser.get(http://localhost:8000/)` para `self.browser.get(self.live_server_url)`, que identifica corretamente a URL e a porta relacionada com o servidor de teste. Além disso, as linhas de código abaixo podem ser removidas do servidor de teste, pois a execução dos mesmos se dará via `manage.py`.
 
 ```python
 if __name__ == '__main__':

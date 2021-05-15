@@ -51,4 +51,6 @@
 * [6.3 Refatorar Casos de Teste](6-atacando-o-maior-desafio-de-forma-incremantal-1/6-3-refatorar-casos-de-teste.md)
 * [6.4 Separando Templates](6-atacando-o-maior-desafio-de-forma-incremantal-1/6-4-separando-templates.md)
 * [6.5 URL para Nova Lista](6-atacando-o-maior-desafio-de-forma-incremantal-1/6-5-url-para-nova-lista.md)
+* [6.6 Alterando Modelos](6-atacando-o-maior-desafio-de-forma-incremantal-1/6.6-alterando-modelos.md)
+* [6.7 URL Próprio para Cada Lista](6-atacando-o-maior-desafio-de-forma-incremantal-1/6.7-url-proprio-para-cada-lista.md)
 

@@ -1,15 +1,15 @@
 # 6.1 Separando URL no Estilo REST
 
-O maior desafio de noss história de usuário é lidar com as URLs distintas para cada novo usuário do nosso sistema. A necessidade é que tenhamos URLs únicas para cada usuário consultar a sua própria lista de tarefas.
+O maior desafio de nossa história de usuário é lidar com as URLs distintas para cada novo usuário do nosso sistema. A necessidade é que tenhamos URLs únicas para cada usuário consultar a sua própria lista de tarefas.
 
 Utilizaremos para isso a inspiração de APIs REST \(_Representational State Transfer_ ou Transferência de Estado Representativo\). Em REST, diferentes URLs oferecem diferentes serviços aos usuários e a estrutura das URLs corresponde a estrutura de dados desejada. 
 
 Para o nosso sistema de lista de tarefas, [Percival \(2017\)](http://www.obeythetestinggoat.com/pages/book.html) define a folha de rascunho abaixo de itens que precisam ser resolvidos nesse capítulo a fim de implementarmos a história de usuário por completa. 
 
-* Ajustar o modelo para que itens sejam associados a listas distintas
-* Adicionar URLs exclusivos para cada lista, por exemplo, como `/lists/<identificador da lista>/`
-* Adicionar um URL para criar uma nova lista via POST, por exemplo, como `/lists/new`
-* Adicionar URL para acrescentar um novo item em uma lista existente, por exemplo,  como `/lists/<identificador da lista>/add_item`
+* [ ] Ajustar o modelo para que itens sejam associados a listas distintas
+* [ ] Adicionar URLs exclusivos para cada lista, por exemplo, como `/lists/<identificador da lista>/`
+* [ ] Adicionar um URL para criar uma lista via POST, por exemplo, como `/lists/new`
+* [ ] Adicionar URL para acrescentar um novo item em uma lista existente, por exemplo,  como `/lists/<identificador da lista>/add_item`
 
 #### Garantindo um Teste de Regressão
 
@@ -138,7 +138,7 @@ class NewVsitorTest(LiveServerTestCase):
 
 		# Francis obtém seu próprio URL exclusivo
 		francis_list_url = self.browser.current_url
-		self.assertRegex(edith_list_url, '/list/.+')
+		self.assertRegex(edith_list_url, '/lists/.+')
 		self.assertNotEqual( francis_list_url, edith_list_url)
 
 		# Novamente não há sinal algum da lista de Edith

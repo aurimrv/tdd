@@ -2,9 +2,9 @@
 
 Recordando o nosso ciclo de TDD \(vermelho, verde, refatorar\), quando chegamos ao estado verde, sempre devemos ponderar se cabe alguma refatoração em nosso código, seja código de aplicação ou código de teste.
 
-No momento atual, nossa aplicação está com duas views: uma responsável por lidar com a página principal e outra para lidar com a lista de itens individual. Ambas fazem uso do mesmo template, passando ao mesmo todos os itens disponíveis no banco de dados.
+Agora, nossa aplicação está com duas _views_: uma responsável por lidar com a página principal e outra para lidar com a lista de itens individual. Ambas usam o mesmo _template_, passando ao mesmo todos os itens disponíveis no banco de dados.
 
-Se avaliarmos os testes unitários que temos disponível pode ser que exita algum que possa ser eliminado decorrente da evolução da aplicação. O comando abaixo percorre nosso arquivo lists/tests.py e apresenta o nome de todos os métodos de teste.
+Se avaliarmos os testes unitários que temos disponível pode ser que exita algum que possa ser eliminado decorrente da evolução da aplicação. O comando abaixo percorre nosso arquivo `lists/tests.py` e apresenta o nome de todos os métodos de teste.
 
 ```python
 (superlists) auri@av:~/tdd/superlists/superlists$ grep -E "class|def" lists/tests.py 
@@ -21,7 +21,7 @@ class ItemModelTest(TestCase):
 	def test_saving_and_retriving_items(self):
 ```
 
-O último método de nossa classe de teste HomePage, test\_displays\_all\_list\_itens, pode ser eliminado pois criamos a classe ListViewTest e o método de teste test\_displays\_all\_list\_itens mais adequado para a evolução de nossa aplicação. Desse modo, o conjunto de testes unitários ficará conforme abaixo.
+O último método de nossa classe de teste `HomePage`, `test_displays_all_list_itens`, pode ser eliminado, pois, criamos a classe `ListViewTest` e o método de teste `test_displays_all_list_itens` mais adequado para a evolução de nossa aplicação. Desse modo, o conjunto de testes unitários ficará conforme abaixo.
 
 ```python
 from django.urls import resolve
