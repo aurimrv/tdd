@@ -158,7 +158,7 @@ class ItemModelTest(TestCase):
 		self.assertEquals(second_saved_item.text, 'Item the second')
 ```
 
-Ao executar os testes unitários temos duas falhas conforme ilustrado abaixo:
+Ao executar os testes unitários, temos duas falhas conforme ilustrado abaixo:
 
 ```python
 (superlists) auri@av:~/tdd/superlists/superlists$ python manage.py test lists
@@ -189,7 +189,7 @@ FAILED (failures=2)
 Destroying test database for alias 'default'...
 ```
 
-A primeira, na linha 11, indica que não estamos salvando o item no banco de dados e, desse modo, não conseguimos recuperar o item salvo. O segundo, linha 20, acusa que nossa URL `/lists/new` ainda não existe e, portanto, obtemos um 404 e não um 302 conforme desejado.
+A primeira, na linha 11, indica que não estamos salvando o item no banco de dados e, desse modo, não conseguimos recuperar o item salvo. O segundo, linha 20, acusa que nosso URL `/lists/new` ainda não existe e, portanto, obtemos um 404 e não um 302 conforme desejado.
 
 #### URL e View para Nova Lista
 

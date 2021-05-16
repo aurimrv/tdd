@@ -4,7 +4,7 @@ O maior desafio de nossa história de usuário é lidar com as URLs distintas pa
 
 Utilizaremos para isso a inspiração de APIs REST \(_Representational State Transfer_ ou Transferência de Estado Representativo\). Em REST, diferentes URLs oferecem diferentes serviços aos usuários e a estrutura das URLs corresponde a estrutura de dados desejada. 
 
-Para o nosso sistema de lista de tarefas, [Percival \(2017\)](http://www.obeythetestinggoat.com/pages/book.html) define a folha de rascunho abaixo de itens que precisam ser resolvidos nesse capítulo a fim de implementarmos a história de usuário por completa. 
+Para o nosso sistema de lista de tarefas, [Percival \(2017\)](http://www.obeythetestinggoat.com/pages/book.html) define a folha de rascunho abaixo de itens que precisam ser resolvidos nesse capítulo de modo a implementarmos a história de usuário por completa. 
 
 * [ ] Ajustar o modelo para que itens sejam associados a listas distintas
 * [ ] Adicionar URLs exclusivos para cada lista, por exemplo, como `/lists/<identificador da lista>/`
